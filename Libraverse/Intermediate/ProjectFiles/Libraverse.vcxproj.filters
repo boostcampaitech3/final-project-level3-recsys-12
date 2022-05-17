@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Libraverse.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{16772DC7-BA42-4691-899E-3082E4B8AD46}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Libraverse.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\LibraverseEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{EA924B96-C448-4C1D-A69A-E241491A61D1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Libraverse">
+      <UniqueIdentifier>{7BC84583-DEE6-4D5E-B77E-E1B7CA9508B1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Libraverse\Libraverse.Build.cs">
+      <Filter>Source\Libraverse</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Libraverse\Libraverse.cpp">
+      <Filter>Source\Libraverse</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Libraverse\Libraverse.h">
+      <Filter>Source\Libraverse</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Libraverse\LibraverseGameModeBase.cpp">
+      <Filter>Source\Libraverse</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Libraverse\LibraverseGameModeBase.h">
+      <Filter>Source\Libraverse</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
