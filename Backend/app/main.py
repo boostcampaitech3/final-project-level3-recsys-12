@@ -5,8 +5,8 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from urllib3 import HTTPResponse
 
-from . import crud, models, schemas
-from .database import SessionLocal, engine
+from db import crud, models, schemas
+from db.database import SessionLocal, engine
 from fastapi.templating import Jinja2Templates
 
 models.Base.metadata.create_all(bind=engine)
