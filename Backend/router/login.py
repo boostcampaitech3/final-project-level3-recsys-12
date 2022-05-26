@@ -56,7 +56,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 @login_router.get("/")
 def get_login_form(request: Request):
-    return templates.TemplateResponse(os.path.join('accounts', 'login_form.html'), context={'request': request})
+    return templates.TemplateResponse(os.path.join('accounts', 'login_asset', 'index.html'), context={'request': request})
 
 
 @login_router.post("/")
