@@ -1,25 +1,29 @@
+import os, yaml
 from sqlalchemy.orm import Session
+from zmq import PLAIN_PASSWORD
 from . import models, schemas
 
-
-def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+from passlib.context import CryptContext
 
 
-def verification_user(db: Session, try_user: schemas.UserCreate):
-    fake_hashed_password = try_user.password + "notreallyhashed"
-    is_exist = db.query(models.User).filter(
-                                    (models.User.user_id==try_user.user_id) &
-                                    (models.User.hashed_password==fake_hashed_password)).first()
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config_hash.yaml')
+with open(CONFIG_PATH) as config:
+    conf = yaml.load(config, Loader=yaml.FullLoader)
+    SECRET_KEY = conf['secret_key']
+    ALGORITHM = conf['ALGORITHM']
+    SCHEMES = conf['SCHEMES']
 
-    if is_exist: return True
-    else: return False
+pwd_context = CryptContext(schemes=[SCHEMES], deprecated="auto")
+
+
+def get_user(db: Session, user_id: str):
+    return db.query(models.User).filter(models.User.user_id == user_id).first()
 
 
 def create_user(db: Session, user: schemas.UserCreate, user_info: schemas.User):
-    fake_hashed_password = user.password + "notreallyhashed"
+    hashed_password = pwd_context.hash(user.password)
     db_user = models.User(
-        hashed_password=fake_hashed_password,
+        hashed_password=hashed_password,
         **user_info.dict(),
         )
     db.add(db_user)

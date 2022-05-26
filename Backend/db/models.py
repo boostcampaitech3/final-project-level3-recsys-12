@@ -28,6 +28,7 @@ class Book(database.Base):
     image_S_URL = Column(String)
     image_M_URL = Column(String)
     image_L_URL = Column(String)
+    genre = Column(String)
 
 
 class Rating(database.Base):

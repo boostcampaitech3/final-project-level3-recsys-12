@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from fastapi import APIRouter, Form, Request, Depends
 from db.schemas import UserCreate, User
-from db.crud import create_user
+from db.crud import create_user, get_user
 from utils import templates, get_db
 
 from sqlalchemy.orm import Session
@@ -12,12 +12,12 @@ from sqlalchemy.orm import Session
 register_router = APIRouter(prefix="/register")
 
 @register_router.get("/")
-def get_register_form(request: Request):
+async def get_register_form(request: Request):
     return templates.TemplateResponse(os.path.join('accounts', 'register_form.html'), context={'request': request})
 
 
 @register_router.post("/")
-def register(
+async def register(
     db: Session = Depends(get_db),
     user_id: str=Form(...), 
     password: str=Form(...),
@@ -38,9 +38,12 @@ def register(
         state=state,
         country=country
         )
-    create_user(db, user_create, user_info)
 
-    return {"message": "회원가입 성공"}
+    if get_user(db, user_id) is None:
+        create_user(db, user_create, user_info)
+        return {"message": "회원가입 성공"}
+    else:
+        return {"message": "이미 존재하는 아이디입니다."}
 
 
 

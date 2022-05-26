@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
@@ -23,3 +23,12 @@ class User(UserBase):
         orm_mode = True
         # data가 dict이 아니라도 ORM model 같은 속성을 가지는 객체를 읽을 수 있게 해준다.
         # id = data['id'] or id = data.id
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
