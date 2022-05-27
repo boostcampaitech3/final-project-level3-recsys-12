@@ -1,8 +1,6 @@
 # basic
 from datetime import datetime, timedelta
-import os, sys
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-# 상위 경로(Backend)를 절대 결로에 추가
+import os
 
 # fastapi
 from fastapi import APIRouter, Form, Request, Depends, HTTPException, status, Response
@@ -14,7 +12,7 @@ from jose import JWTError, jwt
 # defined objects
 from utils import templates, get_db
 from db.crud import get_user
-from db.crud import pwd_context, SECRET_KEY, ALGORITHM
+from db.crud import pwd_context, SECRET_KEY, ALGORITHM, FAKE_PASSWORD
 from db.schemas import UserCreate
 
 # type hint
@@ -38,7 +36,7 @@ def authenticate_user(db: Session, to_login_user: UserCreate) -> bool:
     user = get_user(db, to_login_user.user_id)
     if not user:
         return False
-    if not verify_password(to_login_user.password, user.hashed_password):
+    if not verify_password(to_login_user.password+FAKE_PASSWORD, user.hashed_password):
         return False
     return True
 
@@ -56,12 +54,12 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 @login_router.get("/")
 def get_login_form(request: Request):
-    return templates.TemplateResponse(os.path.join('accounts', 'login_asset', 'index.html'), context={'request': request})
+    return templates.TemplateResponse(os.path.join('accounts', 'sign_in.html'), context={'request': request})
 
 
 @login_router.post("/")
 async def login(
-    response: Response,
+    request: Request,
     db : Session = Depends(get_db),
     form_data: OAuth2PasswordRequestForm = Depends()):
 
@@ -78,6 +76,9 @@ async def login(
         data={"sub": to_login_user.user_id}, expires_delta=access_token_expires
     )
     
+    response = templates.TemplateResponse("main_login.html", {"request": request})
     response.set_cookie(key="access_token", value=access_token, httponly=True)
+    response.set_cookie(key="token_type", value="bearer", httponly=True)
+    return response
     return {"access_token": access_token, "token_type": "bearer"}
     # spec에 따르면 위 예제처럼 access_token과 token_type을 반드시 리턴해주어야 한다고 함.
