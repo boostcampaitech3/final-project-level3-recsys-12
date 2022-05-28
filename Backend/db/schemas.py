@@ -1,43 +1,34 @@
-from datetime import datetime
-from typing import List, Union, Optional
+from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 
 class UserBase(BaseModel):
-    id: str
+    user_id: EmailStr
+
 
 class UserCreate(UserBase):
     password: str
 
 
 class User(UserBase):
-    age: Optional[int] = None
+    age: Optional[int] = None # Union[int, None] = None
+    name: Optional[str] = None
     country: Optional[str] = None
     state: Optional[str] = None
     city: Optional[str] = None
-    created_at: datetime
 
     class Config:
         orm_mode = True
+        # data가 dict이 아니라도 ORM model 같은 속성을 가지는 객체를 읽을 수 있게 해준다.
+        # id = data['id'] or id = data.id
 
 
-class ItemBase(BaseModel):
-    pass
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 
-class ItemCreate(ItemBase):
-    pass
-
-
-class Item(ItemBase):
-    isbn: str
-    title: str
-    author: str
-    publisher: str
-    publication_year: int
-    image_URL: Union[str, None] = None
-
-    class Config:
-        orm_mode = True
+class TokenData(BaseModel):
+    username: Optional[str] = None
