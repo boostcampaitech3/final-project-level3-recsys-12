@@ -1,11 +1,12 @@
 from typing import Optional
 
+from typing import List, Union, Optional
 from pydantic import BaseModel, EmailStr
 
 
 
 class UserBase(BaseModel):
-    user_id: EmailStr
+    id: EmailStr
 
 
 class UserCreate(UserBase):
@@ -32,3 +33,32 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+
+
+class BookBase(BaseModel):
+    id: str
+    title: str
+    publication_year: Union[int, None] = None
+    description: Union[str, None] = None
+    image_URL: Union[str, None] = None
+
+class AuthorBase(BaseModel):
+    id: int
+    name: str
+
+class GenreBase(BaseModel):
+    id: int
+    name: str
+
+
+class BookSchema(BookBase):
+    authors: List[AuthorBase] = []
+    genres: List[GenreBase] = []
+  
+
+
+class Author(AuthorBase):
+    books: List[BookBase] = []
+
+class Genre(GenreBase):
+    books: List[BookBase] = []

@@ -1,11 +1,11 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text
+from sqlalchemy.orm import relationship
+from .database import Base, engine
 
-from . import database
+class User(Base):
+    __tablename__ = "users"
 
-class User(database.Base):
-    __tablename__ = "user_info"
-
-    user_id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     # index는 query performance를 좋게 하기 위해 사용한다.
     hashed_password = Column(String, nullable=False)
     age = Column(Integer)
@@ -17,44 +17,88 @@ class User(database.Base):
     # created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 
-class Book(database.Base):
-    __tablename__ = "book_info"
+class Book(Base):
+    __tablename__ = "books"
 
-    isbn = Column(String, primary_key=True)
+    id = Column(String, primary_key=True)
     title = Column(String)
-    author = Column(String)
-    publisher = Column(String)
     publication_year = Column(Integer)
-    image_S_URL = Column(String)
-    image_M_URL = Column(String)
-    image_L_URL = Column(String)
-    genre = Column(String)
+    description = Column(String)
+    image_URL = Column(String)
+
+    authors = relationship("BookAuthor", back_populates="book")
+    genres = relationship("BookGenre", back_populates="book")
+
+    def __str__(self):
+        return self.title
 
 
-class Rating(database.Base):
+class Genre(Base):
+    __tablename__ = "genres"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    books = relationship("BookGenre", back_populates="genre")
+
+    def __str__(self):
+        return self.name
+
+
+class Author(Base):
+    __tablename__ = "authors"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    books = relationship("BookAuthor", back_populates='author')
+
+    def __str__(self):
+        return self.name
+
+
+class BookAuthor(Base):
+    __tablename__ = "book_authors"
+    book_id = Column(ForeignKey('books.id'), primary_key=True)
+    author_id = Column(ForeignKey('authors.id'), primary_key=True)
+
+    book = relationship("Book", back_populates="authors")
+    author = relationship("Author", back_populates="books") 
+
+
+class BookGenre(Base):
+    __tablename__ = "book_genres"
+
+    book_id = Column(ForeignKey('books.id'), primary_key=True)
+    genre_id = Column(ForeignKey('genres.id'), primary_key=True)
+
+    book = relationship("Book", back_populates="genres")
+    genre = relationship("Genre", back_populates="books")
+
+
+
+class Rating(Base):
     __tablename__ = "ratings"
-    user_id = Column(String, ForeignKey('user_info.user_id'), primary_key=True)
-    isbn = Column(String, ForeignKey('book_info.isbn'), primary_key=True)
+    user = Column(String, ForeignKey('users.id'), primary_key=True)
+    item = Column(String, ForeignKey('books.id'), primary_key=True)
     rating = Column(Integer)
 
 
-class UserQnA(database.Base):
+class UserQnA(Base):
     __tablename__ = 'user_qna'
 
     board_id = Column(Integer, primary_key=True)
-    user_id = Column(String, ForeignKey('user_info.user_id'))
+    user_id = Column(String, ForeignKey('users.id'))
     content = Column(Text)
     create_date = Column(DateTime)
     is_answered = Column(Boolean)
 
 
-class Loan(database.Base):
+class Loan(Base):
     __tablename__ = 'loan_info'
-    isbn = Column(String,  ForeignKey('book_info.isbn'), primary_key=True)
-    user_id = Column(String, ForeignKey('user_info.user_id'), primary_key=True)
+    isbn = Column(String,  ForeignKey('books.id'), primary_key=True)
+    user_id = Column(String, ForeignKey('users.id'), primary_key=True)
     due = Column(DateTime)
     count = Column(Integer)
 
 
 if __name__ == '__main__':
-    database.Base.metadata.create_all(bind=database.engine)
+    Base.metadata.create_all(bind=engine)
