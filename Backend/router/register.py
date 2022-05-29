@@ -20,23 +20,15 @@ async def register(
     user_id: str=Form(...), 
     password: str=Form(...),
     name: str=Form(...),
-    age: int=Form(...),
-    city: str=Form(...),
-    state: str=Form(...),
-    country: str=Form(...),
     ):
     if get_user(db, user_id) is None:
         user_create = UserCreate(
-            user_id=user_id, 
+            id=user_id, 
             password=password)
         
         user_info = User(
-            user_id=user_id,
-            name=name,
-            age=age,
-            city=city,
-            state=state,
-            country=country
+            id=user_id,
+            name=name
             )
 
         create_user(db, user_create, user_info)

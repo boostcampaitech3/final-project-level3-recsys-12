@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text
 from sqlalchemy.orm import relationship
-from .database import Base, engine
+from database import Base, engine
 
 class User(Base):
     __tablename__ = "users"
@@ -8,13 +8,10 @@ class User(Base):
     id = Column(String, primary_key=True, index=True)
     # index는 query performance를 좋게 하기 위해 사용한다.
     hashed_password = Column(String, nullable=False)
-    age = Column(Integer)
     name = Column(String)
-    country = Column(String)
-    state = Column(String)
-    city = Column(String)
-    # 장르 선호도
-    # created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __str__(self):
+        return self.id
 
 
 class Book(Base):
@@ -85,7 +82,7 @@ class Rating(Base):
 class UserQnA(Base):
     __tablename__ = 'user_qna'
 
-    board_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     user_id = Column(String, ForeignKey('users.id'))
     content = Column(Text)
     create_date = Column(DateTime)

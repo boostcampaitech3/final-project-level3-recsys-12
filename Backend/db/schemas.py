@@ -14,11 +14,7 @@ class UserCreate(UserBase):
 
 
 class User(UserBase):
-    age: Optional[int] = None # Union[int, None] = None
-    name: Optional[str] = None
-    country: Optional[str] = None
-    state: Optional[str] = None
-    city: Optional[str] = None
+    name: Optional[str] = None # Union[int, None] = None
 
     class Config:
         orm_mode = True

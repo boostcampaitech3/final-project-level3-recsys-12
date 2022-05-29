@@ -13,7 +13,7 @@ from jose import JWTError, jwt
 # defined objects
 from utils import templates, get_db
 from db.crud import get_user
-from db.crud import pwd_context, SECRET_KEY, ALGORITHM, FAKE_PASSWORD
+from db.crud import pwd_context, SECRET_KEY, ALGORITHM
 from db.schemas import UserCreate
 
 # type hint
@@ -34,10 +34,10 @@ def verify_password(plain_password, hashed_password) -> bool:
 
 
 def authenticate_user(db: Session, to_login_user: UserCreate) -> bool:
-    user = get_user(db, to_login_user.user_id)
+    user = get_user(db, to_login_user.id)
     if not user:
         return False
-    if not verify_password(to_login_user.password+FAKE_PASSWORD, user.hashed_password):
+    if not verify_password(to_login_user.password+to_login_user.id, user.hashed_password):
         return False
     return True
 
@@ -63,7 +63,7 @@ async def login(
     db : Session = Depends(get_db),
     form_data: OAuth2PasswordRequestForm = Depends()) -> RedirectResponse:
 
-    to_login_user = UserCreate(user_id=form_data.username, password=form_data.password)
+    to_login_user = UserCreate(id=form_data.username, password=form_data.password)
     if not authenticate_user(db, to_login_user):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -73,7 +73,7 @@ async def login(
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": to_login_user.user_id}, expires_delta=access_token_expires
+        data={"sub": to_login_user.id}, expires_delta=access_token_expires
     )
     
     response = RedirectResponse(url="http://118.67.131.88:30001/")
