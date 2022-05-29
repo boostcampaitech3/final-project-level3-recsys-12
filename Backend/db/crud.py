@@ -30,3 +30,24 @@ def create_user(db: Session, user: schemas.UserCreate, user_info: schemas.User):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+
+
+def get_recent_item(db: Session, skip: int = 0, limit: int = 2):
+    return db.query(models.Book).order_by('publication_year').offset(skip).limit(limit).all()
+
+
+def get_item(db:Session, item_id: str):
+    return db.query(models.Book).filter(models.Book.id == item_id).first()
+
+
+def all_genres(db:Session):
+    return db.query(models.Genre).all()
+
+
+
+def get_genres(db:Session, genre_id: int):
+    return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
+
+
+def get_item_by_genre(db:Session, genre_id: int):
+    return db.query(models.Genre).filter(models.Genre.id == genre_id).all()

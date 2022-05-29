@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'nav.html' %}
+
+  {% for item in recent_items %}
+  <p>{{item.publication_year}}</p>
+  <img src="{{item.image_URL}}" alt="이미지가 준비중입니다.">
+  <p>{{item.title}}</p>
+  <button type="button" class="btn btn-primary">
+    <a href="books/{{item.id}}" class="text-white" style="text-decoration: none">detail</a>
+  </button>
+  {% endfor %}
+{% endblock content %}
+
+
