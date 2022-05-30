@@ -19,6 +19,7 @@ from utils import get_current_user
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 app.include_router(login_router)
 app.include_router(register_router)
