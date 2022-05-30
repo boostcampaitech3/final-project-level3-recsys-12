@@ -14,8 +14,8 @@ import numpy as np
 ##############################ARGS##################################
 args = {
     ######data#######
-    'min_user_cnt' : 10,
-    'min_item_cnt' : 5,
+    'min_user_cnt' : 100,
+    'min_item_cnt' : 50,
     'n_heldout' : 1000,
     'target_prop' : 0.2,
     'min_item_to_split' : 5,
@@ -45,7 +45,7 @@ args = {
     'verbose' : True,
     
     #####etc#######
-    'base_dir' : 'data/',
+    'base_dir' : '../../data/',
     'random_seed' : 42,
     'device' : 'cuda'
 }
@@ -53,21 +53,14 @@ args = Box(args)
 ##############################ARGS##################################
 
 ##############################PATHS##################################
-path_rating = os.path.join(args.base_dir, 'train_ratings.csv')
 dir_output = os.path.join(os.getcwd(), 'output')
-
-dir_file_path = {
-    'dir_base': args.base_dir,
-    'rating': path_rating,
-    'dir_output': dir_output
-}
-dir = Box(dir_file_path)
 ##############################PATHS##################################
     
 random_seed(args.random_seed)
 
 
 data_kwargs = {
+    'base_dir' : args.base_dir,
     'seed' : args.random_seed,
 
     'min_user_cnt' : args.min_user_cnt,
@@ -126,7 +119,7 @@ trainer_kwargs = {
     'datasets' : datasets, 
 
     #etc
-    'output_path' : dir.dir_output,
+    'output_path' : dir_output,
     'model_name' : 'RecVAE',
     'device' : args.device,
     'verbose' : args.verbose,
@@ -175,4 +168,7 @@ def inference(trainer, data, k):
 inference_df = inference(trainer, data, k=10)
 inference_df = inference_df.sort_values(['user', 'score'], ascending=[True, False])
 
+if not os.path.exists('result/'):
+            os.mkdir('result')
+            
 inference_df.to_csv('result/output.csv', index=False)

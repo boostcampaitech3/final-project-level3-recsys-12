@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 from copy import deepcopy
 from scipy import sparse
+import gc
+import json
+from tqdm import tqdm
 
 def fix_seed(num:int)-> None:
     np.random.seed(num)
@@ -10,6 +13,7 @@ def fix_seed(num:int)-> None:
 def preprocessing(data:pd.DataFrame) -> pd.DataFrame:
     data.rename(columns={"User-ID" : "user", "ISBN" : "item", "Book-Rating" : 'rating'}, inplace=True)
     data['rating'] = data['rating'].replace(0.0, 5.0)
+    data.drop((data[data['item'].str.match('B')]).index, inplace=True)
     return data
     
 def filtering_data(data:pd.DataFrame, cnt:int, by:str='user') -> pd.DataFrame:
@@ -23,14 +27,30 @@ def filtering_data(data:pd.DataFrame, cnt:int, by:str='user') -> pd.DataFrame:
     
     return valid_data
 
+def load_json_lines(file):
+    gc.collect()
+    with open(file, 'r') as json_file :
+        for line in json_file :
+            data = json.loads(line)
+            yield data["reviewerID"], data["asin"], data["overall"]
+
+def load_json_data(file):
+    arr = []
+    for data in tqdm(load_json_lines(file)):
+        arr.append(data)
+    df = pd.DataFrame(arr, columns=['user', 'item', 'rating'])
+    
+    return df
+
 class AEDataset():
-    def __init__(self, seed, min_user_cnt, min_item_cnt, n_heldout, target_prop, min_item_to_split):
+    def __init__(self, base_dir, seed, min_user_cnt, min_item_cnt, n_heldout, target_prop, min_item_to_split):
         
         # fix_seed
         fix_seed(seed)
         
         # load data
-        self.raw_data = pd.read_csv('data/Ratings.csv', header=0)
+        self.base_dir = base_dir
+        self.raw_data = load_json_data(self.base_dir + 'amazon_rating.json')
         self.data = preprocessing(self.raw_data)
         
         # filtering data
@@ -186,7 +206,7 @@ class AEDataset():
                                  dtype='float64',
                                  shape=(n_users, n_items))
         
-        sparse.save_npz('data/infrence_data.npz', matrix)
+        sparse.save_npz(self.base_dir + 'infrence_data.npz', matrix)
         
         self.inference_data = data
         return matrix

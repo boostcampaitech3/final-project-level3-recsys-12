@@ -3,6 +3,7 @@ import numpy as np
 from utils import ndcg, recall
 from copy import deepcopy
 import datetime
+import os
 
 
 def generate(batch_size, device, data_in, data_out=None, shuffle=False, samples_perc_per_epoch=1):
@@ -142,6 +143,9 @@ class Trainer() :
             if early_stop == 10 :
                 print('Early Stop')
                 break
+        
+        if not os.path.exists('output/'):
+            os.mkdir('output')
             
         torch.save(self.model_best.state_dict(), f'output/{self.model_name}_{datetime.datetime.now()}.pt')
             
