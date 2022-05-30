@@ -42,10 +42,5 @@ def all_genres(db:Session):
     return db.query(models.Genre).all()
 
 
-
-def get_genres(db:Session, genre_id: int):
-    return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
-
-
 def get_item_by_genre(db:Session, genre_id: int):
-    return db.query(models.Genre).filter(models.Genre.id == genre_id).all()
+    return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
