@@ -457,7 +457,7 @@
                     <!-- Content -->
                     <div class="js-scrollbar u-sidebar__body">
                         <div class="u-sidebar__content u-header-sidebar__content">
-                            <form class="">
+                            <form method="POST" class="">
                                 <!-- Login -->
                                 <div id="login1" data-target-group="idForm1">
                                     <!-- Title -->
@@ -485,28 +485,8 @@
                                         </div>
                                         <!-- End Form Group -->
 
-                                        <div class="d-flex justify-content-between mb-5 align-items-center">
-                                            <!-- Checkbox -->
-                                            <div class="js-form-message">
-                                                <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
-                                                    <input type="checkbox" class="custom-control-input" id="termsCheckbox1" name="termsCheckbox1" required>
-                                                    <label class="custom-control-label" for="termsCheckbox1">
-                                                        <span class="font-size-2 text-secondary-gray-700">
-                                                            Remember me
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End Checkbox -->
-
-                                            <a class="js-animation-link text-dark font-size-2 t-d-u link-muted font-weight-medium" href="javascript:;"
-                                            data-target="#forgotPassword1"
-                                            data-link-group="idForm1"
-                                            data-animation-in="fadeIn">Forgot Password?</a>
-                                        </div>
-
                                         <div class="mb-4d75">
-                                            <button type="submit" class="btn btn-block py-3 rounded-0 btn-dark">Sign In</button>
+                                            <button type="submit" formaction="http://118.67.131.88:30001/login" class="btn btn-block py-3 rounded-0 btn-dark">Sign In</button>
                                         </div>
 
                                         <div class="mb-2">
@@ -555,7 +535,7 @@
                                         <!-- End Input -->
 
                                         <div class="mb-3">
-                                            <button type="submit" class="btn btn-block py-3 rounded-0 btn-dark">Create Account</button>
+                                            <button type="submit" formaction="http://118.67.131.88:30001/register" class="btn btn-block py-3 rounded-0 btn-dark">Create Account</button>
                                         </div>
 
                                         <div class="text-center mb-4">
@@ -639,7 +619,7 @@
                     <!-- Content -->
                     <div class="js-scrollbar u-sidebar__body">
                         <div class="u-sidebar__content u-header-sidebar__content">
-                            <form class="">
+                            <form method="POST" class="">
                                 <!-- Login -->
                                 <div id="login" data-target-group="idForm">
                                     <!-- Title -->
@@ -731,7 +711,7 @@
                                         <div class="form-group mb-4">
                                             <div class="js-form-message js-focus-state">
                                                 <label id="signupConfirmPasswordLabel" class="form-label" for="signupConfirmPassword">Confirm Password *</label>
-                                                <input type="password" class="form-control rounded-0 height-4 px-4" name="confirmPassword" id="signupConfirmPassword" placeholder="" aria-label="" aria-describedby="signupConfirmPasswordLabel" required>
+                                                <input type="text" class="form-control rounded-0 height-4 px-4" name="confirmPassword" id="signupConfirmPassword" placeholder="" aria-label="" aria-describedby="signupConfirmPasswordLabel">
                                             </div>
                                         </div>
                                         <!-- End Input -->
