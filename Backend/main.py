@@ -33,21 +33,15 @@ app.include_router(book_router)
 app.include_router(genre_router)
 
 @app.get("/", response_class=HTMLResponse)
-def main(request: Request):
+def main(request: Request, db: Session = Depends(get_db)):
+    
     token: str = request.cookies.get("access_token")
     if token is not None:
-        return templates.TemplateResponse("main_login.html" , context={"request": request})
+        status = False
     else:
-        return templates.TemplateResponse("main_logout.html" , context={"request": request})
-
-
-@app.get("/", response_class=HTMLResponse)
-def main(request: Request, db: Session = Depends(get_db)):
-    recent_items = crud.get_recent_item(db, skip=0, limit=2)
-    genres = crud.all_genres(db)
+        status = True
     context = {
         "request": request,
-        "recent_items": recent_items,
-        "genres": genres,
+        "status": status,
     }
-    return templates.TemplateResponse("main.html" , context)
+    return templates.TemplateResponse("html/home/index.html" , context)
