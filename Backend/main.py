@@ -11,6 +11,8 @@ from router.login import login_router
 from router.register import register_router
 from router.mypage import mypage_router
 from router.logout import logout_router
+from router.books import book_router
+from router.genres import genre_router
 
 from utils import get_current_user
 
