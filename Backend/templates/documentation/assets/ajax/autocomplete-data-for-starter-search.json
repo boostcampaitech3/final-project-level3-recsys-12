@@ -1,0 +1,95 @@
+[
+  {
+    "label": "Intro page",
+    "category": "Starter",
+    "url": "bookworm/index.html"
+  },{
+    "label": "Destination",
+    "category": "Destination",
+    "url": "bookworm/destination/destination.html"
+  },{
+    "label": "Icon Blocks",
+    "category": "Icon Blocks",
+    "url": "bookworm/icon-blocks/icon-blocks.html"
+  },{
+    "label": "Tab",
+    "category": "Tab",
+    "url": "bookworm/tabs/tabs.html"
+  },{
+    "label": "Tab v1",
+    "category": "Tab",
+    "url": "bookworm/tabs/tabs.html#tabs-1"
+  },{
+    "label": "Tab v2 Carousel",
+    "category": "Tab",
+    "url": "bookworm/tabs/tabs.html#tabs-2"
+  },{
+    "label": "Tab v3",
+    "category": "Tab",
+    "url": "bookworm/tabs/tabs.html#tabs-3"
+  },{
+    "label": "Deal Carousel",
+    "category": "Deal Carousel",
+    "url": "bookworm/deal-carousel/deal-carousel.html"
+  },{
+    "label": "Testimonials",
+    "category": "Testimonials",
+    "url": "bookworm/testimonials/testimonial.html"
+  },{
+    "label": "Default (White background)",
+    "category": "Footers",
+    "url": "bookworm/footer/footer.html#footer-1"
+  },{
+    "label": "Footers dark background",
+    "category": "Footers",
+    "url": "bookworm/footer/footer.html#footer-2"
+  },{
+    "label": "Recent articles",
+    "category": "Recent articles",
+    "url": "bookworm/recent-article/recent-article.html"
+  },{
+    "label": "Category",
+    "category": "Category",
+    "url": "bookworm/category/category"
+  },{
+    "label": "Deals List",
+    "category": "Deals List",
+    "url": "bookworm/deals-list/deals-list"
+  },{
+    "label": "Clients",
+    "category": "Clients",
+    "url": "bookworm/Components/clients.html"
+  },{
+    "label": "Product Cards Static",
+    "category": "Product Cards Stati",
+    "url": "bookworm/product-cards/product-cards-static.html"
+  },{
+    "label": "Product Cards Carousel",
+    "category": "Product Cards Carousel",
+    "url": "bookworm/product-cards/product-cards-carousel.html"
+  },{
+    "label": "Hero",
+    "category": "Hero",
+    "url": "bookworm/hero.html"
+  },{
+    "label": "Icon blocks - Center aligned",
+    "category": "Icon blocks",
+    "url": "bookworm/icon-blocks/icon-blocks.html#icon-blocks-v1"
+  },{
+    "label": "Icon blocks - Left aligned",
+    "category": "Icon blocks",
+    "url": "bookworm/icon-blocks/icon-blocks.html#icon-blocks-v2"
+  },{
+    "label": "Icon blocks - Background",
+    "category": "Icon blocks",
+    "url": "bookworm/icon-blocks/icon-blocks.html#icon-blocks-v3"
+  },{
+    "label": "Banner",
+    "category": "Banner",
+    "url": "bookworm/banner/banner.html"
+  },{
+    "category": "Header layouts",
+    "label": "Headers",
+    "url": "bookworm/header-layouts.html"
+  }
+]
