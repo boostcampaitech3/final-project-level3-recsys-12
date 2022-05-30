@@ -18,11 +18,7 @@ from router.genres import genre_router
 from utils import get_current_user
 
 app = FastAPI()
-app.mount(
-    "/templates",
-    StaticFiles(directory=os.path.join(os.path.dirname(__file__), 'templates')),
-    name="templates",
-)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(login_router)
 app.include_router(register_router)
