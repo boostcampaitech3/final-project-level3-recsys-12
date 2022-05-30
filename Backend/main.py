@@ -1,7 +1,7 @@
 import os
-from re import template
 
-from utils import templates
+from utils import templates, get_db
+from sqlalchemy.orm import Session
 
 from fastapi import Depends, FastAPI,  Request
 from fastapi.staticfiles import StaticFiles
@@ -15,11 +15,18 @@ from router.recsys import send_to_unreal
 from router.books import book_router
 from router.genres import genre_router
 
-from utils import get_current_user
-
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/templates", StaticFiles(directory="templates"), name="templates")
+
+app.mount(
+    "/templates",
+    StaticFiles(directory=os.path.join(os.path.dirname(__file__), 'templates')),
+    name="templates",
+)
+app.mount(
+    "/static",
+    StaticFiles(directory=os.path.join(os.path.dirname(__file__), 'static')),
+    name="static",
+)
 
 app.include_router(login_router)
 app.include_router(register_router)
