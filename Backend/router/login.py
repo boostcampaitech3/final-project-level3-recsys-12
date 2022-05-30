@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 import os
 
 # fastapi
-from fastapi import APIRouter, Form, Request, Depends, HTTPException, status, Response
+from fastapi import APIRouter, Form, Request, Depends, HTTPException, status
+from fastapi.responses import RedirectResponse
 
 # token
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -57,11 +58,10 @@ def get_login_form(request: Request):
     return templates.TemplateResponse(os.path.join('accounts', 'sign_in.html'), context={'request': request})
 
 
-@login_router.post("/")
+@login_router.post("/", response_class=RedirectResponse)
 async def login(
-    request: Request,
     db : Session = Depends(get_db),
-    form_data: OAuth2PasswordRequestForm = Depends()):
+    form_data: OAuth2PasswordRequestForm = Depends()) -> RedirectResponse:
 
     to_login_user = UserCreate(user_id=form_data.username, password=form_data.password)
     if not authenticate_user(db, to_login_user):
@@ -76,9 +76,10 @@ async def login(
         data={"sub": to_login_user.user_id}, expires_delta=access_token_expires
     )
     
-    response = templates.TemplateResponse("main_login.html", {"request": request})
+    response = RedirectResponse(url="http://118.67.131.88:30001/")
     response.set_cookie(key="access_token", value=access_token, httponly=True)
     response.set_cookie(key="token_type", value="bearer", httponly=True)
+    response.status_code = 302
     return response
     return {"access_token": access_token, "token_type": "bearer"}
     # spec에 따르면 위 예제처럼 access_token과 token_type을 반드시 리턴해주어야 한다고 함.
