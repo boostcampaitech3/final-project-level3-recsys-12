@@ -4,7 +4,7 @@ import os
 
 # fastapi
 from fastapi import APIRouter, Form, Request, Depends, HTTPException, status
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 
 # token
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -37,7 +37,7 @@ def authenticate_user(db: Session, to_login_user: UserCreate) -> bool:
     user = get_user(db, to_login_user.id)
     if not user:
         return False
-    if not verify_password(to_login_user.password+to_login_user.id, user.hashed_password):
+    if not verify_password(to_login_user.password, user.hashed_password):
         return False
     return True
 
@@ -53,9 +53,27 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
+def make_access_token( db: Session, user: UserCreate):
+    if not authenticate_user(db, user):
+        return False
+    
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.id}, expires_delta=access_token_expires
+    )
+
+    return access_token
+
+
 @login_router.get("/")
-def get_login_form(request: Request):
-    return templates.TemplateResponse(os.path.join('accounts', 'sign_in.html'), context={'request': request})
+def get_login_form(request: Request, user_id: str = None, password: str = None, db: Session = Depends(get_db)):
+    if user_id:
+        to_login_user = UserCreate(id=user_id, password=password)
+        access_token = make_access_token(db, to_login_user)
+        ret_json = {"access_token": access_token}
+        return JSONResponse(content=ret_json)
+    else:
+        return templates.TemplateResponse(os.path.join('accounts', 'sign_in.html'), context={'request': request})
 
 
 @login_router.post("/", response_class=RedirectResponse)
@@ -64,17 +82,7 @@ async def login(
     form_data: OAuth2PasswordRequestForm = Depends()) -> RedirectResponse:
 
     to_login_user = UserCreate(id=form_data.username, password=form_data.password)
-    if not authenticate_user(db, to_login_user):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": to_login_user.id}, expires_delta=access_token_expires
-    )
+    access_token = make_access_token(db, to_login_user)
     
     response = RedirectResponse(url="http://118.67.131.88:30001/")
     response.set_cookie(key="access_token", value=access_token, httponly=True)

@@ -20,7 +20,7 @@ def get_user(db: Session, id: str):
 
 
 def create_user(db: Session, user: schemas.UserCreate, user_info: schemas.User):
-    hashed_password = pwd_context.hash(user.password+user.id)
+    hashed_password = pwd_context.hash(user.password)
     db_user = models.User(
         hashed_password=hashed_password,
         **user_info.dict(),
