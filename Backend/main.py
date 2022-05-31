@@ -15,6 +15,7 @@ from router.logout import logout_router
 from router.recsys import send_to_unreal
 from router.books import book_router
 from router.genres import genre_router
+from router.user_loan_info import loan_info
 
 app = FastAPI()
 
@@ -36,6 +37,7 @@ app.include_router(logout_router)
 app.include_router(send_to_unreal)
 app.include_router(book_router)
 app.include_router(genre_router)
+app.include_router(loan_info)
 
 @app.get("/", response_class=HTMLResponse)
 async def main(request: Request, db: Session = Depends(get_db)):
