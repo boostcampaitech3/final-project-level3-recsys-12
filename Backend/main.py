@@ -14,6 +14,7 @@ from router.logout import logout_router
 from router.recsys import send_to_unreal
 from router.books import book_router
 from router.genres import genre_router
+from router.search import search_router
 
 app = FastAPI()
 
@@ -35,6 +36,7 @@ app.include_router(logout_router)
 app.include_router(send_to_unreal)
 app.include_router(book_router)
 app.include_router(genre_router)
+app.include_router(search_router)
 
 @app.get("/", response_class=HTMLResponse)
 def main(request: Request, db: Session = Depends(get_db)):
