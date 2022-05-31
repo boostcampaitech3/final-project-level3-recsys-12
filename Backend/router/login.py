@@ -11,7 +11,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
 # defined objects
-from utils import templates, get_db
+from utils import get_db
 from db.crud import get_user
 from db.crud import pwd_context, SECRET_KEY, ALGORITHM
 from db.schemas import UserCreate
@@ -20,7 +20,7 @@ from db.schemas import UserCreate
 from sqlalchemy.orm import Session
 from typing import Optional
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 360
 
 login_router = APIRouter(prefix="/login")
 
@@ -89,5 +89,5 @@ async def login(
     response.set_cookie(key="token_type", value="bearer", httponly=True)
     response.status_code = 302
     return response
-    return {"access_token": access_token, "token_type": "bearer"}
+    # return {"access_token": access_token, "token_type": "bearer"}
     # spec에 따르면 위 예제처럼 access_token과 token_type을 반드시 리턴해주어야 한다고 함.

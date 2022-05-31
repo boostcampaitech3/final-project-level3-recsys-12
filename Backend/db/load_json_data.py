@@ -1,6 +1,6 @@
 import os, gc, json, time
 import pandas as pd
-from database import engine
+from .database import engine
 from crud import pwd_context
 
 from typing import Tuple, List
@@ -95,18 +95,80 @@ def preprocessing_rating_json(file_path: str) -> Tuple[pd.DataFrame, pd.DataFram
     return users_df, ratings_df
 
 
-def get_meta_datas(file_path: str, img_file_path: str):
-    isbns = []
-    genres = []
-    titles = []
-    description = []
-    
+def make_df_of_meta(gen_meta, gen_img):
+    isbns, img_isbns, titles, genres, img_urls = list(), list(), list(), list(), list()
+
+    for data in gen_meta:
+        if data['asin'][0] == 'B': continue
+        isbns.append(data['asin'])
+        titles.append(data['title'])
+        genres.append(data['category'])
+        # if data['description']: description.append(data['description'][0])
+        # else: description.append('')
+        # author.append(data['brand'])
+
+    for data in gen_img:
+        img_isbns.append(data['isbn'])
+        img_urls.append(data['url'])
+
+    books_img = pd.DataFrame()
+    books_img['id'] = img_isbns
+    books_img['image_URL'] = img_urls
+
+    books = pd.DataFrame()
+    books['id'] = isbns
+    books['title'] = titles
+
+    book_merge = pd.merge(books, books_img, left_on='id', right_on='id', how='left')
+
+    return book_merge, genres
+
+
+def get_meta_datas_df(file_path: str, img_file_path: str) -> pd.DataFrame:
     gen_meta_json = load_json_data(file_path)
     gen_img_json = load_json_data(img_file_path)
-    pass
+
+    books, genres = make_df_of_meta(gen_meta_json, gen_img_json)
+    return books, genres
+
+
+def make_df_of_genre(gen_meta, genres: list) -> Tuple[list, list]:
+    genre_df = pd.DataFrame()
+    split_genre = list()
+
+    for genre in genres:
+        if genre:
+            split_genre.extend(genre)
+    split_genre = list(set(split_genre))
+    genre_df['name'] = split_genre
+    genre_df['id'] = genre_df.index
+
+    book_genre_id, book_genre_genre = list(), list()
+    book_genre_df = pd.DataFrame()
+
+    for data in gen_meta:
+        if data['asin'][0] == 'B': continue
+        if data['category']:
+            for genre in data['category']:
+                book_genre_id.append(data['asin'])
+                book_genre_genre.append(split_genre.index(genre))
+    
+    book_genre_df['book_id'] = book_genre_id
+    book_genre_df['genre_id'] = book_genre_genre
+
+    return genre_df, book_genre_df
+
+
+def get_genre_df(file_path: str, genres: list):
+    gen_meta_json = load_json_data(file_path)
+    genre_df, book_genre_df = make_df_of_genre(gen_meta_json, genres)
+    return genre_df, book_genre_df
+
 
 def preprocessing_book_meta_json(file_path: str, img_file_path: str):
-    pass
+    book_df, genres = get_meta_datas_df(file_path, img_file_path)
+    genre_df, book_genre_df = get_genre_df(file_path, genres)
+    return book_df, genre_df, book_genre_df
 
 
 def insert_datas(df: pd.DataFrame, engine, table_name: str) -> None:
@@ -120,11 +182,11 @@ def insert_datas(df: pd.DataFrame, engine, table_name: str) -> None:
 
 if __name__ == '__main__':
     # excute: nohup /opt/conda/envs/web/bin/python -u /opt/ml/recsys12/Backend/db/load_data.py > /opt/ml/db.log &
-    base_dir = os.path.dirname(__file__)
-    users_df, ratings_df = preprocessing_rating_json(os.path.join(base_dir, 'datas', 'Books.json'))
+    base_dir = os.path.join(os.path.dirname(__file__), 'datas', 'json')
+    users_df, ratings_df = preprocessing_rating_json(os.path.join(base_dir, 'Books.json'))
     book_df, genre_df, book_genre_df = preprocessing_book_meta_json(
-        file_path=os.path.join(base_dir, 'datas', 'Books.json'),
-        img_file_path=os.path.join(base_dir, 'datas', 'img_url_ver2.json'))
+        file_path=os.path.join(base_dir, 'Books.json'),
+        img_file_path=os.path.join(base_dir, 'img_url_ver2.json'))
 
     df_datas = [users_df, book_df, genre_df, book_genre_df]
     table_names = ['users', 'books', 'genres', 'book_genres']

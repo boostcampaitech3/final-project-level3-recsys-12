@@ -1,8 +1,9 @@
-from datetime import datetime, timedelta, timezone
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from .database import Base, engine
+from db.database import Base, engine
 
 
 class User(Base):
@@ -23,11 +24,13 @@ class Book(Base):
     id = Column(String, primary_key=True)
     title = Column(String)
     publication_year = Column(Integer)
-    description = Column(String)
+    publisher = Column(String)
+    synopsis = Column(String)
     image_URL = Column(String)
 
     authors = relationship("BookAuthor", back_populates="book")
     genres = relationship("BookGenre", back_populates="book")
+    loan_book = relationship("Loan", back_populates="book")
 
     def __str__(self):
         return self.title
@@ -87,23 +90,20 @@ class UserQnA(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(String, ForeignKey('users.id'))
     content = Column(Text)
-    create_date = Column(DateTime)
+    create_at = Column(DateTime)
     is_answered = Column(Boolean)
-
-
-def default_loan_due():
-    days_of_loan_term = 7
-    due_date = datetime.now(timezone(timedelta(hours=9))) + timedelta(days=days_of_loan_term)
-    return due_date
-
 
 class Loan(Base):
     __tablename__ = 'loan_info'
-    isbn = Column(String,  ForeignKey('books.id'), primary_key=True)
+    book_id = Column(String,  ForeignKey('books.id'), primary_key=True)
     user_id = Column(String, ForeignKey('users.id'), primary_key=True)
-    due = Column(DateTime, default=default_loan_due)
+    loan_at = Column(DateTime, primary_key = True)
+    return_at = Column(DateTime)
+    due = Column(DateTime)
     count = Column(Integer)
     is_return = Column(Boolean)
+
+    book = relationship("Book", back_populates="loan_book")
 
 
 if __name__ == '__main__':
