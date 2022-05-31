@@ -18,6 +18,9 @@ from router.genres import genre_router
 from router.user_loan_info import loan_info
 
 app = FastAPI()
+routers = [login_router, register_router, mypage_router, logout_router, send_to_unreal, book_router, genre_router, loan_info]
+for router in routers:
+    app.include_router(router)
 
 app.mount(
     "/templates",
@@ -30,14 +33,6 @@ app.mount(
     name="static",
 )
 
-app.include_router(login_router)
-app.include_router(register_router)
-app.include_router(mypage_router)
-app.include_router(logout_router)
-app.include_router(send_to_unreal)
-app.include_router(book_router)
-app.include_router(genre_router)
-app.include_router(loan_info)
 
 @app.get("/", response_class=HTMLResponse)
 async def main(request: Request, db: Session = Depends(get_db)):
