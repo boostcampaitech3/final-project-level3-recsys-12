@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta, timezone
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from .database import Base, engine
+
 
 class User(Base):
     __tablename__ = "users"
@@ -71,7 +74,6 @@ class BookGenre(Base):
     genre = relationship("Genre", back_populates="books")
 
 
-
 class Rating(Base):
     __tablename__ = "ratings"
     user = Column(String, ForeignKey('users.id'), primary_key=True)
@@ -89,12 +91,19 @@ class UserQnA(Base):
     is_answered = Column(Boolean)
 
 
+def default_loan_due():
+    days_of_loan_term = 7
+    due_date = datetime.now(timezone(timedelta(hours=9))) + timedelta(days=days_of_loan_term)
+    return due_date
+
+
 class Loan(Base):
     __tablename__ = 'loan_info'
     isbn = Column(String,  ForeignKey('books.id'), primary_key=True)
     user_id = Column(String, ForeignKey('users.id'), primary_key=True)
-    due = Column(DateTime)
+    due = Column(DateTime, default=default_loan_due)
     count = Column(Integer)
+    is_return = Column(Boolean)
 
 
 if __name__ == '__main__':

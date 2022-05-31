@@ -67,13 +67,13 @@ def make_access_token( db: Session, user: UserCreate):
 
 @login_router.get("/")
 def get_login_form(request: Request, user_id: str = None, password: str = None, db: Session = Depends(get_db)):
+    token_value = False
     if user_id:
         to_login_user = UserCreate(id=user_id, password=password)
-        access_token = make_access_token(db, to_login_user)
-        ret_json = {"access_token": access_token}
-        return JSONResponse(content=ret_json)
-    else:
-        return templates.TemplateResponse(os.path.join('accounts', 'sign_in.html'), context={'request': request})
+        token_value = make_access_token(db, to_login_user)
+    
+    ret_json = {"access_token": token_value}
+    return JSONResponse(content=ret_json)
 
 
 @login_router.post("/", response_class=RedirectResponse)

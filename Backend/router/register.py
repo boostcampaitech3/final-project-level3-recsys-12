@@ -8,10 +8,6 @@ from sqlalchemy.orm import Session
 
 register_router = APIRouter(prefix="/register")
 
-@register_router.get("/")
-async def get_register_form(request: Request):
-    return templates.TemplateResponse(os.path.join('accounts', 'sign_up.html'), context={'request': request})
-
 
 @register_router.post("/")
 async def register(
