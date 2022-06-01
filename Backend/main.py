@@ -1,6 +1,7 @@
 import os
 
-from utils import templates, get_db
+from utils import templates, get_db, get_current_user
+from db.models import User
 from sqlalchemy.orm import Session
 
 from fastapi import Depends, FastAPI,  Request
@@ -14,8 +15,12 @@ from router.logout import logout_router
 from router.recsys import send_to_unreal
 from router.books import book_router
 from router.genres import genre_router
+from router.user_loan_info import loan_info
 
 app = FastAPI()
+routers = [login_router, register_router, mypage_router, logout_router, send_to_unreal, book_router, genre_router, loan_info]
+for router in routers:
+    app.include_router(router)
 
 app.mount(
     "/templates",
@@ -28,24 +33,24 @@ app.mount(
     name="static",
 )
 
-app.include_router(login_router)
-app.include_router(register_router)
-app.include_router(mypage_router)
-app.include_router(logout_router)
-app.include_router(send_to_unreal)
-app.include_router(book_router)
-app.include_router(genre_router)
 
 @app.get("/", response_class=HTMLResponse)
-def main(request: Request, db: Session = Depends(get_db)):
+async def main(request: Request, db: Session = Depends(get_db)):
     
     token: str = request.cookies.get("access_token")
     if token is not None:
-        status = False
+        # token이 있을 때
+        current_user = await get_current_user(request=request, db=db)
+        login_required = False
+        username = current_user.name
     else:
-        status = True
+        # token이 없을 때
+        login_required = True
+        username = None
+
     context = {
         "request": request,
-        "status": status,
+        "login_required": login_required,
+        "username": username
     }
     return templates.TemplateResponse("html/home/index.html" , context)

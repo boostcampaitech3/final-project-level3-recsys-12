@@ -24,25 +24,24 @@ def get_db():
 
 async def get_current_user(
     request: Request,
-    db : Session = Depends(get_db)) -> User:
-
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    db: Session = Depends(get_db)) -> User:
     try:
         token: str = request.cookies.get("access_token")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            raise credentials_exception
+            print('token error')
+            return False
         token_data = TokenData(username=username)
     except JWTError:
-        raise credentials_exception
+        print('JWT Error')
+        return False
     user = get_user(db, id=token_data.username)
     if user is None:
-        raise credentials_exception
+        print('No user')
+        return False
+    
+    print('success')
     return user
 
 

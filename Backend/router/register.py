@@ -8,10 +8,6 @@ from sqlalchemy.orm import Session
 
 register_router = APIRouter(prefix="/register")
 
-@register_router.get("/")
-async def get_register_form(request: Request):
-    return templates.TemplateResponse(os.path.join('accounts', 'sign_up.html'), context={'request': request})
-
 
 @register_router.post("/")
 async def register(
@@ -32,9 +28,9 @@ async def register(
             )
 
         create_user(db, user_create, user_info)
-        return templates.TemplateResponse(os.path.join('sign_up', 'success.html'), context={'request': request})
+        return templates.TemplateResponse(os.path.join('html', 'others', 'sign_up_success.html'), context={'request': request})
     else:
-        return templates.TemplateResponse(os.path.join('sign_up', 'fail.html'), context={'request': request})
+        return templates.TemplateResponse(os.path.join('html', 'others', 'sign_up_fail.html'), context={'request': request})
 
 
 
