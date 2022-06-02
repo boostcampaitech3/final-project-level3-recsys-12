@@ -166,6 +166,5 @@ def get_loan_of_user(db: Session, user_id: str):
     return db.query(models.Loan).filter(models.Loan.user_id==user_id).all()
 
 
-def get_user_recsys_list(db: Session, user_id: str):
-    return db.query(models.Rating).filter(models.Rating.user==user_id).all()
-
+def get_inference_of_user(db: Session, user_id: str):
+    return db.query(models.Inference).filter(models.Inference.user==user_id).all()
