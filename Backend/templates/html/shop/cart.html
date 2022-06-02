@@ -83,9 +83,9 @@
                                                     </div>
                                                 </td>
 
-                                                <td class="Book-return" style="width: 10%">
+                                                <td class="Book-return" style="width: 15%">
                                                     <div class="mb-2">
-                                                        <button class="btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium" onclick="location.href='http://118.67.131.88:30001/books/return/{{ loan_book.isbn }}'">반납</button>
+                                                        <button class="btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium" onclick="location.href='http://118.67.131.88:30001/books/{{ loan_book.isbn }}/return'">반납</button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -110,7 +110,7 @@
                                                     </div>
                                                 </td>
 
-                                                <td  class="Book-loan-at" data-title="Title">
+                                                <td  class="Book-loan-at" data-title="Title" style="width: 17%">
                                                     <div class="d-flex align-items-center">
                                                         <div class="ml-3 m-w-200-lg-down">
                                                             {{ loan_book.loan_at[:10] }}
@@ -118,7 +118,7 @@
                                                     </div>
                                                 </td>
 
-                                                <td class="Book-return-at" data-title="Price">
+                                                <td class="Book-return-at" data-title="Price" style="width: 17%">
                                                     <div class="d-flex align-items-center">
                                                         <div class="ml-3 m-w-200-lg-down">
                                                             {{ loan_book.return_at[:10] }}
@@ -126,9 +126,9 @@
                                                     </div>
                                                 </td>
 
-                                                <td class="Book-return">
+                                                <td class="Book-return" style="width: 15%">
                                                     <div class="mb-2">
-                                                        <button disabled class="btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium" onclick="location.href='{{previous_url}}'">반납</button>
+                                                        <button disabled class="btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium">반납</button>
                                                     </div>
                                                 </td>
                                             </tr>

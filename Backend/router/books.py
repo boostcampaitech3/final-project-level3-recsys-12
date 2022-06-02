@@ -73,7 +73,7 @@ async def rating(
     ) -> RedirectResponse:
 
     crud.create_user_item_rating(db, user=current_user.id, item=book_id, rating=rating)
-    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
+    response = RedirectResponse(url=f"http://http://118.67.131.88:30001/books/{book_id}")
     return response
 
 
@@ -86,7 +86,7 @@ async def modify_rating(
     ) -> RedirectResponse:
 
     crud.modify_user_item_rating(db, user=current_user.id, item=book_id, rating=rating)
-    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
+    response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
     return response
 
 
@@ -94,7 +94,8 @@ async def modify_rating(
 def loan_book_func(book_id: str, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # book_id = '0001844423'
     crud.create_book_loan(db, current_user.id, book_id)
-    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
+    response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
+    response.status_code = 302
     return response
 
 
@@ -102,5 +103,6 @@ def loan_book_func(book_id: str, db: Session = Depends(get_db), current_user: mo
 def return_book_func(book_id: str, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # book_id = '0001844423'
     crud.return_book(db, current_user.id, book_id)
-    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
+    response = RedirectResponse(url=f"http://118.67.131.88:30001/")
+    response.status_code = 302
     return response
