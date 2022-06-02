@@ -1,5 +1,5 @@
 import os, yaml
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from db import models, schemas

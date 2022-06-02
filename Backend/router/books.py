@@ -1,14 +1,12 @@
 from typing import List
-from fastapi import APIRouter, Form, Request, Depends, HTTPException
+from fastapi import APIRouter, Form, Request, Depends
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from urllib3 import HTTPResponse
 from utils import templates, get_db, get_current_user
 
-from router.loan_func import loan_router, return_router
-
-from db import crud, schemas, models
+from db import crud, models
 
 book_router = APIRouter(prefix="/books")
 
@@ -75,7 +73,7 @@ async def rating(
     ) -> RedirectResponse:
 
     crud.create_user_item_rating(db, user=current_user.id, item=book_id, rating=rating)
-    response = RedirectResponse(url="http://127.0.0.1:8000/books/{book_id}")
+    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
     return response
 
 
@@ -88,7 +86,7 @@ async def modify_rating(
     ) -> RedirectResponse:
 
     crud.modify_user_item_rating(db, user=current_user.id, item=book_id, rating=rating)
-    response = RedirectResponse(url="http://127.0.0.1:8000/books/{book_id}")
+    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
     return response
 
 
@@ -96,19 +94,13 @@ async def modify_rating(
 def loan_book_func(book_id: str, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # book_id = '0001844423'
     crud.create_book_loan(db, current_user.id, book_id)
-    response = RedirectResponse(url="http://127.0.0.1:8000/books/{book_id}")
+    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
     return response
+
 
 @book_router.get("/{book_id}/return")
 def return_book_func(book_id: str, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # book_id = '0001844423'
     crud.return_book(db, current_user.id, book_id)
-    response = RedirectResponse(url="http://127.0.0.1:8000/books/{book_id}")
-    return response
-
-@book_router.get("/loan")
-def return_book_func(book_id: str, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    # book_id = '0001844423'
-    crud.return_book(db, current_user.id, book_id)
-    response = RedirectResponse(url="http://127.0.0.1:8000/books/{book_id}")
+    response = RedirectResponse(url="http://http://118.67.131.88:30001/books/{book_id}")
     return response
