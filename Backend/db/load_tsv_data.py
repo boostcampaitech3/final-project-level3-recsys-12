@@ -14,7 +14,8 @@ def make_books_meta_df(
     book_autor_path: str,
     book_genre_path: str,
     book_path: str,
-    rating_path: str) -> List[pd.DataFrame]:
+    rating_path: str,
+    inference_path: str) -> List[pd.DataFrame]:
     
     user_df = pd.read_csv(user_path, sep='\t')
     user_df.drop_duplicates(['id'], keep='first', ignore_index=True, inplace=True)
@@ -24,6 +25,7 @@ def make_books_meta_df(
     book_genre_df = pd.read_csv(book_genre_path, sep='\t')
     book_df = pd.read_csv(book_path, sep='\t')
     rating_df = pd.read_csv(rating_path, sep='\t')
+    inference_df = pd.read_csv(inference_path)
 
     hashed_password = pwd_context.hash('test')
     user_df['hashed_password'] = hashed_password
@@ -37,7 +39,7 @@ def make_books_meta_df(
     rating_df.reset_index(drop=True)
         
 
-    return [user_df, author_df, genre_df, book_df, book_autor_df, book_genre_df, rating_df]
+    return [user_df, author_df, genre_df, book_df, book_autor_df, book_genre_df, rating_df, inference_df]
 
 
 def insert_datas(df: pd.DataFrame, engine, table_name: str) -> None:
@@ -60,6 +62,7 @@ if __name__ == '__main__':
     book_genre_path = os.path.join(base_dir, 'Book_Genre.tsv')
     book_path = os.path.join(base_dir, 'Book.tsv')
     rating_path = os.path.join(base_dir, 'Rating.tsv')
+    inference_path = os.path.join(base_dir, "output.csv")
 
     book_meta_dfs = make_books_meta_df(
         user_path,
@@ -69,13 +72,14 @@ if __name__ == '__main__':
         book_genre_path,
         book_path,
         rating_path,
+        inference_path,
     )
 
     df_datas = list()
     df_datas.extend(book_meta_dfs)
-    table_names = ['users', 'authors', 'genres', 'books', 'book_authors', 'book_genres', 'ratings'] 
+    table_names = ['users', 'authors', 'genres', 'books', 'book_authors', 'book_genres', 'ratings', 'inference'] 
 
-    for df, table_name in zip(df_datas, table_names):
+    for df, table_name in zip([df_datas[-1]], [table_names[-1]]):
         print(f'load {table_name}...')
         start_time = time.time()
         insert_datas(df=df, engine=engine, table_name=table_name)
