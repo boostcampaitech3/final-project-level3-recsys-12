@@ -1,3 +1,4 @@
+from copyreg import pickle
 from logging.config import valid_ident
 import pandas as pd
 import numpy as np
@@ -5,15 +6,18 @@ from copy import deepcopy
 from scipy import sparse
 import gc
 import json
+import os
 from tqdm import tqdm
+import pickle
+
+from sklearn.preprocessing import MinMaxScaler
 
 def fix_seed(num:int)-> None:
     np.random.seed(num)
 
 def preprocessing(data:pd.DataFrame) -> pd.DataFrame:
-    data.rename(columns={"User-ID" : "user", "ISBN" : "item", "Book-Rating" : 'rating'}, inplace=True)
-    data['rating'] = data['rating'].replace(0.0, 5.0)
-    data.drop((data[data['item'].str.match('B')]).index, inplace=True)
+    #data.rename(columns={"User-ID" : "user", "ISBN" : "item", "Book-Rating" : 'rating'}, inplace=True)
+    data['rating'] = data['rating'] / 5
     return data
     
 def filtering_data(data:pd.DataFrame, cnt:int, by:str='user') -> pd.DataFrame:
@@ -42,7 +46,7 @@ def load_json_data(file):
     
     return df
 
-class AEDataset():
+class TrainDataset():
     def __init__(self, base_dir, seed, min_user_cnt, min_item_cnt, n_heldout, target_prop, min_item_to_split):
         
         # fix_seed
@@ -50,7 +54,7 @@ class AEDataset():
         
         # load data
         self.base_dir = base_dir
-        self.raw_data = load_json_data(self.base_dir + 'amazon_rating.json')
+        self.raw_data = pd.read_csv(self.base_dir + 'Rating.tsv', sep='\t')
         self.data = preprocessing(self.raw_data)
         
         # filtering data
@@ -77,7 +81,7 @@ class AEDataset():
         
         # label encode
         for data in [self.train_input, self.valid_input, self.valid_target, self.test_input, self.test_target]:
-            self.user_encoder, self.item_encoder = self._label_encode(data)
+            self.user_encoder, self.item_encoder = self.label_encode(data)
         
         # raw data to sparse matrix
         self.train_matrix = self._data_to_matrix('train')
@@ -145,7 +149,7 @@ class AEDataset():
         
         return input, target
     
-    def _label_encode(self, data) :
+    def label_encode(self, data) :
         
         print('encoding...')
         
@@ -164,8 +168,8 @@ class AEDataset():
         if data_type == 'train':
             
             n_users = self.train_input['user'].max() + 1
-            rows, cols = self.train_input['user'], self.train_input['item']
-            matrix = sparse.csr_matrix((np.ones_like(rows), (rows, cols)), 
+            rats, rows, cols = self.train_input['rating'], self.train_input['user'], self.train_input['item']
+            matrix = sparse.csr_matrix((rats, (rows, cols)), 
                                      dtype='float64',
                                      shape=(n_users, self.n_items))
             return matrix
@@ -181,14 +185,15 @@ class AEDataset():
         start_idx = min(input['user'].min(), target['user'].min())
         end_idx = max(input['user'].max(), target['user'].max())
 
-        rows_input, cols_input = input['user'] - start_idx, input['item']
-        rows_target, cols_target = target['user'] - start_idx, target['item']
+        rats_input, rows_input, cols_input = input['rating'], input['user'] - start_idx, input['item']
+
+        rats_target, rows_target, cols_target = target['rating'], target['user'] - start_idx, target['item']
         
-        matrix_input = sparse.csr_matrix((np.ones_like(rows_input), (rows_input, cols_input)), 
+        matrix_input = sparse.csr_matrix((rats_input, (rows_input, cols_input)), 
                                          dtype='float64',
                                          shape=(end_idx - start_idx + 1, self.n_items))
         
-        matrix_target = sparse.csr_matrix((np.ones_like(rows_target),
+        matrix_target = sparse.csr_matrix((rats_target,
                                        (rows_target, cols_target)), dtype='float64',
                                        shape=(end_idx - start_idx + 1, self.n_items))
         
@@ -197,16 +202,25 @@ class AEDataset():
     def _make_inference_dataset(self) :
         
         data = self.data.loc[self.data['item'].isin(self.train_items)]
-        self.user_encoder, self.item_encoder = self._label_encode(data)
-        
+        self.user_encoder, self.item_encoder = self.label_encode(data)
+
         n_users = self.n_users
         n_items = len(data['item'].unique())
-        rows, cols = data['user'], data['item']    
-        matrix = sparse.csr_matrix((np.ones_like(rows), (rows, cols)), 
+        rats, rows, cols = data['rating'], data['user'], data['item']    
+        matrix = sparse.csr_matrix((rats, (rows, cols)), 
                                  dtype='float64',
-                                 shape=(n_users, n_items))
+                                 shape=(n_users, self.n_items))
         
-        sparse.save_npz(self.base_dir + 'infrence_data.npz', matrix)
+        if not os.path.exists('infer/'):
+            os.mkdir('infer')
+
+        sparse.save_npz('infer/infrence_data.npz', matrix)
+        
+        with open('infer/user_encoder.pkl', 'wb') as f:
+            pickle.dump(self.user_encoder, f)
+        
+        with open('infer/item_encoder.pkl', 'wb') as f:
+            pickle.dump(self.item_encoder, f)
         
         self.inference_data = data
         return matrix

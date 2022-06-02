@@ -3,7 +3,7 @@ from box import Box
 import torch.optim as optim
 
 from utils import random_seed, sparse2Tensor
-from dataset import AEDataset
+from dataset import TrainDataset
 from trainer import Trainer
 from model import VAE
 
@@ -14,15 +14,15 @@ import numpy as np
 ##############################ARGS##################################
 args = {
     ######data#######
-    'min_user_cnt' : 100,
-    'min_item_cnt' : 50,
+    'min_user_cnt' : 10,
+    'min_item_cnt' : 0,
     'n_heldout' : 1000,
     'target_prop' : 0.2,
     'min_item_to_split' : 5,
     
     #####model######
-    'hidden_dim' : 600, # 600
-    'latent_dim' : 200, # 200
+    'hidden_dim' : 2000, # 600
+    'latent_dim' : 400, # 200
     'stnd_mixture_weight' : 3/20,
     'post_mixture_weight' : 3/4,
     'unif_mixture_weight' : 1/10,
@@ -39,13 +39,15 @@ args = {
     'de_epochs' : 1, #1
     'beta' : None,
     'gamma' : 0.005, #0.005
+    'early_stop': 10,
+
     'not_alter' : False,
     'ndcg_k' : 10,
     'recall_k' : 10,
     'verbose' : True,
     
     #####etc#######
-    'base_dir' : '../../data/',
+    'base_dir' : '../../data/ver2/',
     'random_seed' : 42,
     'device' : 'cuda'
 }
@@ -72,7 +74,7 @@ data_kwargs = {
 }
 
 
-data = AEDataset(**data_kwargs)
+data = TrainDataset(**data_kwargs)
 
 datasets = data.datasets # dict, {train_data, valid_data(input, target), test_data(input, target), inference_data}
 input_dim = data.n_items
@@ -111,6 +113,7 @@ trainer_kwargs = {
     'beta' : args.beta,
     'gamma' : args.gamma,
     'dropout_ratio' : args.dropout_ratio,
+    'early_stop' : args.early_stop,
     'not_alter' : args.not_alter,
     'ndcg_k' : args.ndcg_k,
     'recall_k' : args.recall_k,
@@ -136,32 +139,40 @@ trainer.test()
 
 def inference(trainer, data, k):
     
-    best_model = trainer.model_best
-    input_data = sparse2Tensor(trainer.inference_data).to(trainer.device)
-    users = range(data.n_users)
+    model = trainer.model_best
     model.eval()
-    
-    with torch.no_grad():
-        prediction = model(input_data, calculate_loss=False)
-        print(prediction.size())
-        prediction[torch.nonzero(input_data, as_tuple=True)] = -np.inf
-        scores, movies = torch.topk(prediction, dim=1, k=k)
+    # inference_df = pd.DataFrame(columns={'user', 'item', 'score'})
+
+    for start_idx in range(0, trainer.inference_data.shape[0], 10000):
         
-        users = np.tile(users, (k,1)).T
-        user_list = np.concatenate([user for user in users])
-        score_list = torch.cat([score for score in scores])
-        movie_list = torch.cat([movie for movie in movies])
-    
-    user_decoder = {value : key for (key, value) in trainer.user_encoder.items()}
-    item_decoder = {value : key for (key, value) in trainer.item_encoder.items()}
-    
-    inference_df = pd.DataFrame()
-    inference_df['user'] = user_list
-    inference_df['item'] = movie_list.cpu().numpy()
-    inference_df['score'] = score_list.cpu().numpy()
-    
-    inference_df['user'] = inference_df['user'].apply(lambda x : user_decoder[x])
-    inference_df['item'] = inference_df['item'].apply(lambda x : item_decoder[x])
+        end_idx = start_idx + 10000
+        input_data = sparse2Tensor(trainer.inference_data[start_idx:end_idx]).to(trainer.device)
+        users = range(input_data.shape[0])
+
+        with torch.no_grad():
+            prediction = model(input_data, calculate_loss=False)
+            print(prediction.size())
+            prediction[torch.nonzero(input_data, as_tuple=True)] = -np.inf
+            scores, movies = torch.topk(prediction, dim=1, k=k)
+            
+            users = np.tile(users, (k,1)).T
+            user_list = np.concatenate([user for user in users])
+            score_list = torch.cat([score for score in scores])
+            movie_list = torch.cat([movie for movie in movies])
+        
+        user_decoder = {value : key for (key, value) in trainer.user_encoder.items()}
+        item_decoder = {value : key for (key, value) in trainer.item_encoder.items()}
+        
+        temp_df = pd.DataFrame()
+        temp_df['user'] = user_list
+        temp_df['item'] = movie_list.cpu().numpy()
+        temp_df['score'] = score_list.cpu().numpy()
+        
+        temp_df['user'] = temp_df['user'].apply(lambda x : user_decoder[x])
+        temp_df['item'] = temp_df['item'].apply(lambda x : item_decoder[x])
+        
+        if start_idx == 0 : inference_df = temp_df
+        else : inference_df = pd.concat([inference_df, temp_df])
 
     return inference_df
 

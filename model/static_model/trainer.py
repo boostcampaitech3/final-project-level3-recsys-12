@@ -49,7 +49,7 @@ class Batch:
 
 class Trainer() :
     def __init__(self, model, model_best, optimizer_encoder, optimizer_decoder,
-                 batch_size, epochs, en_epochs, de_epochs, not_alter, beta, gamma, dropout_ratio,
+                 batch_size, epochs, en_epochs, de_epochs, not_alter, beta, gamma, dropout_ratio, early_stop,
                  ndcg_k, recall_k,
                  datasets,
                  output_path, model_name, device, verbose,
@@ -70,6 +70,7 @@ class Trainer() :
         self.beta = beta
         self.gamma = gamma
         self.dropout_ratio = dropout_ratio
+        self.early_stop = early_stop
         
         # metric pararmeter
         self.ndcg_k = ndcg_k
@@ -107,7 +108,7 @@ class Trainer() :
     def run(self) :
         best_ndcg = 0
         
-        early_stop = 0
+        early_stop_cnt = 0
         
         metrics = self._metrics_loader('ndcg')
             
@@ -133,21 +134,21 @@ class Trainer() :
                 best_ndcg = self.eval_ndcg_list[-1]
                 self.model_best.load_state_dict(deepcopy(self.model.state_dict()))
             else :
-                print(f'early stop count [{early_stop}/10]')
-                early_stop += 1
+                print(f'early stop count [{early_stop_cnt}/{self.early_stop}]')
+                early_stop_cnt += 1
                 
             
             print(f'[epoch {epoch}/{self.epochs} || valid_ndcg@{self.ndcg_k} : {self.eval_ndcg_list[-1]:.4f} | ' +
                     f'best valid_ndcg : {best_ndcg:.4f} | train ndcg@{self.ndcg_k} : {self.train_ndcg_list[-1]:.4f}')
             
-            if early_stop == 10 :
+            if early_stop_cnt == self.early_stop :
                 print('Early Stop')
                 break
         
         if not os.path.exists('output/'):
             os.mkdir('output')
             
-        torch.save(self.model_best.state_dict(), f'output/{self.model_name}_{datetime.datetime.now()}.pt')
+        torch.save(self.model_best, f'output/{self.model_name}_{datetime.datetime.now()}.pt')
             
     def test(self) :
         metrics = self._metrics_loader('ndcg', 'recall')
