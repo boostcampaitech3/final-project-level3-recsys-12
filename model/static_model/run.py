@@ -147,7 +147,7 @@ def inference(trainer, data, k):
         
         end_idx = start_idx + 10000
         input_data = sparse2Tensor(trainer.inference_data[start_idx:end_idx]).to(trainer.device)
-        users = range(input_data.shape[0])
+        users = range(start_idx, end_idx)
 
         with torch.no_grad():
             prediction = model(input_data, calculate_loss=False)

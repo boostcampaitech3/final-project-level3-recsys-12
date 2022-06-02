@@ -45,7 +45,7 @@ def full_inference(k):
     for start_idx in range(0,sparse_data.shape[0], 30000): 
         end_idx = start_idx + 30000
         input_data = sparse2Tensor(sparse_data[start_idx:end_idx]).to(device)
-        users = range(input_data.shape[0])
+        users = range(start_idx, end_idx)
         model.eval()
         
         with torch.no_grad():
