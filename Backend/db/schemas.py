@@ -61,7 +61,6 @@ class Author(AuthorBase):
 class Genre(GenreBase):
     books: List[BookBase] = []
 
-
 class Loan(BaseModel):
     book_id: str
     user_id: str
@@ -70,6 +69,14 @@ class Loan(BaseModel):
     due: datetime
     count: int
     is_return: bool
+
+    class Config:
+        orm_mode = True
+
+class Rating(BaseModel):
+    user: str
+    item: str
+    rating: int
 
     class Config:
         orm_mode = True
