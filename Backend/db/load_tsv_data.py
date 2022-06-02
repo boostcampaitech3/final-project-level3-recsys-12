@@ -37,6 +37,10 @@ def make_books_meta_df(
     rating_df.sort_values(['rating'], ascending=False, inplace=True)
     rating_df.drop_duplicates(subset=['item', 'user'], keep='first', inplace=True)
     rating_df.reset_index(drop=True)
+
+    inference_df = pd.merge(inference_df, user_df, left_on='user', right_on='id', how='left')
+    inference_df = pd.merge(inference_df, book_df, left_on='item', right_on='id', how='left' )
+    inference_df = inference_df[inference_df['id_x'].notnull() & inference_df['id_y'].notnull()][['user', 'item', 'score']]
         
 
     return [user_df, author_df, genre_df, book_df, book_autor_df, book_genre_df, rating_df, inference_df]
