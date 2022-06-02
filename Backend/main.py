@@ -1,4 +1,5 @@
 import os
+from readline import get_current_history_length
 
 from utils import templates, get_db, get_current_user
 from db.models import User
@@ -35,22 +36,22 @@ app.mount(
 
 
 @app.get("/", response_class=HTMLResponse)
-async def main(request: Request, db: Session = Depends(get_db)):
+async def main(request: Request, current_user = Depends(get_current_user)):
     
-    token: str = request.cookies.get("access_token")
-    if token is not None:
-        # token이 있을 때
-        current_user = await get_current_user(request=request, db=db)
-        login_required = False
-        username = current_user.name
-    else:
-        # token이 없을 때
+    if current_user is False:
+        # token이 없거나, token이 있지만 기간이 만료되었을 때
         login_required = True
         username = None
+    else:
+        # token이 있고, 기간이 만료가 안 되었을 때
+        login_required = False
+        username = current_user.name
 
     context = {
         "request": request,
         "login_required": login_required,
         "username": username
     }
-    return templates.TemplateResponse("html/home/index.html" , context)
+
+    response = templates.TemplateResponse("html/home/index.html" , context)
+    return response

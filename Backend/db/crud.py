@@ -48,12 +48,14 @@ def get_item_by_genre(db:Session, genre_id: int):
     return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
 
 
-def get_current_time() -> datetime:
-    return datetime.now(timezone(timedelta(hours=9)))
+def current_time() -> datetime:
+    # 현재 시간을 가져온다. 한국은 utc기준으로 +9 hour이다.
+    return datetime.utcnow() + timedelta(hours=9)
 
 def create_book_loan(db: Session, user_id: str, book_id: str):
+    # 유저가 책을 빌리면 대출 관련 데이터를 생성한다.
     days_of_loan_term = 7
-    loan_at = get_current_time()
+    loan_at = current_time()
     loan_info = schemas.Loan(
         book_id=book_id,
         user_id=user_id,
@@ -62,7 +64,6 @@ def create_book_loan(db: Session, user_id: str, book_id: str):
         count = 0,
         is_return = False
     )
-
     db_loan = models.Loan(
         **loan_info.dict(),
         )
@@ -72,6 +73,7 @@ def create_book_loan(db: Session, user_id: str, book_id: str):
 
 
 def get_loan_info(db: Session, user_id: str, book_id: str):
+    # user와 book에 대해 대출 정보를 가져온다. : 언제 대출 했는지, 언제 반납하는지 등.
     loan_info = db.query(models.Loan).filter(
         and_(
             models.Loan.user_id==user_id, 
@@ -83,14 +85,19 @@ def get_loan_info(db: Session, user_id: str, book_id: str):
 
 
 def return_book(db: Session, user_id: str, book_id: str):
+    # 책 반납하는 기능: is_return을 true로하고, return 시간 기록
     loan_info = get_loan_info(db, user_id, book_id)
     loan_info.is_return = True
-    loan_info.return_at = get_current_time()
+    loan_info.return_at = current_time()
 
     db.commit()
 
 
 def get_loan_of_user(db: Session, user_id: str):
-    return db.query(models.Loan).filter(user_id==user_id).all()
+    # user의 대출 이력을 가져온다.
+    return db.query(models.Loan).filter(models.Loan.user_id==user_id).all()
 
+
+def get_user_recsys_list(db: Session, user_id: str):
+    return db.query(models.Rating).filter(models.Rating.user==user_id).all()
 

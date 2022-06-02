@@ -28,9 +28,19 @@ async def register(
             )
 
         create_user(db, user_create, user_info)
-        return templates.TemplateResponse(os.path.join('html', 'others', 'sign_up_success.html'), context={'request': request})
+        context = {
+            'request': request,
+            'success_mesage': '회원가입에 성공하셨습니다.',
+            'login_required': True
+        }
+        return templates.TemplateResponse(os.path.join('html', 'others', 'account_success.html'), context=context)
     else:
-        return templates.TemplateResponse(os.path.join('html', 'others', 'sign_up_fail.html'), context={'request': request})
+        context = {
+            'request': request,
+            'fail_message': '회원가입에 실패 하셨습니다.',
+            'login_required': True
+        }
+        return templates.TemplateResponse(os.path.join('html', 'others', 'account_fail.html'), context=context)
 
 
 
