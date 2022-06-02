@@ -1,4 +1,4 @@
-from typing import Optional
+from datetime import datetime
 
 from typing import List, Union, Optional
 from pydantic import BaseModel, EmailStr
@@ -58,3 +58,23 @@ class Author(AuthorBase):
 
 class Genre(GenreBase):
     books: List[BookBase] = []
+
+class Loan(BaseModel):
+    book_id: str
+    user_id: str
+    loan_at: datetime
+    return_at: Union[datetime, None] = None
+    due: datetime
+    count: int
+    is_return: bool
+
+    class Config:
+        orm_mode = True
+
+class Rating(BaseModel):
+    user: str
+    item: str
+    rating: int
+
+    class Config:
+        orm_mode = True

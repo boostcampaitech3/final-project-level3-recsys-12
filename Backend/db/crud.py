@@ -1,7 +1,9 @@
 import os, yaml
+from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 from . import models, schemas
-
+from sqlalchemy import desc
+from sqlalchemy import and_
 from passlib.context import CryptContext
 
 
@@ -75,3 +77,83 @@ def search_by_description(db:Session, search_text: str):
 def search_by_author(db:Session, search_text: str):
     search = "%{}%".format(search_text)
     return db.query(models.Author).filter(models.Author.name.like(search)).all()
+
+def get_current_time() -> datetime:
+    return datetime.now(timezone(timedelta(hours=9)))
+
+
+def create_book_loan(db: Session, user_id: str, book_id: str):
+    days_of_loan_term = 7
+    loan_at = get_current_time()
+    loan_info = schemas.Loan(
+        book_id=book_id,
+        user_id=user_id,
+        loan_at = loan_at,
+        due = loan_at + timedelta(days=days_of_loan_term),
+        count = 0,
+        is_return = False
+    )
+
+    db_loan = models.Loan(
+        **loan_info.dict(),
+        )
+    db.add(db_loan)
+    db.commit()
+    db.refresh(db_loan)
+
+    return db_loan
+
+
+def get_loan_info(db: Session, user_id: str, book_id: str):
+    loan_info = db.query(models.Loan).filter(
+        and_(
+            models.Loan.user_id==user_id, 
+            models.Loan.book_id==book_id,
+            models.Loan.is_return==False
+            )).first()
+    
+    return loan_info
+
+
+def create_user_item_rating(db: Session, user_id: str, book_id: str, rating: int):
+    rating_info = schemas.Rating(
+        user=user_id,
+        item=book_id,
+        rating=rating
+    )
+    db_rating = models.Rating(
+        **rating_info.dict()
+    )
+    db.add(db_rating)
+    db.commit()
+    db.refresh(db_rating)
+
+    return db_rating
+
+def get_user_item_rating(db: Session, user_id: str, book_id: str):
+    rating_info = db.query(models.Rating).filter(
+        and_(
+            models.Rating.user == user_id,
+            models.Rating.item == book_id
+        )).first()
+    return rating_info
+
+
+def modify_user_item_rating(db: Session, user_id: str, book_id: str, rating: int):
+    rating_info = get_user_item_rating(db, user_id=user_id, book_id=book_id)
+    rating_info.rating = rating
+    db.commit()
+    return rating_info
+    
+
+
+def return_book(db: Session, user_id: str, book_id: str):
+    loan_info = get_loan_info(db, user_id=user_id, book_id=book_id)
+    loan_info.is_return = True
+    loan_info.return_at = get_current_time()
+
+    db.commit()
+
+
+def get_loan_of_user(db: Session, user_id: str):
+    return db.query(models.Loan).filter(user_id==user_id).all()
