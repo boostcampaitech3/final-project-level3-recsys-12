@@ -30,22 +30,24 @@ async def get_current_user(
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            print('token error')
             return False
         token_data = TokenData(username=username)
-    except JWTError:
-        print('JWT Error')
+    except:
+        # token decoding 실패 시
         return False
     user = get_user(db, id=token_data.username)
     if user is None:
-        print('No user')
+        # DB에 유저가 없을 때
         return False
-    
-    print('success')
     return user
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return current_user
+    if current_user is False:
+        # token으로 user를 가져올 수 없을 때: decoding 실패 또는 DB에 유저 없음
+        return False
+    else:
+        if current_user.disabled:
+            # user가 휴면계정 상태일 때
+            raise False
+        return current_user

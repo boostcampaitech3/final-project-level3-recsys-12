@@ -14,6 +14,8 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     name = Column(String)
 
+    rating_user = relationship("Rating", back_populates="rec_user")
+
     def __str__(self):
         return self.id
 
@@ -31,6 +33,7 @@ class Book(Base):
     authors = relationship("BookAuthor", back_populates="book")
     genres = relationship("BookGenre", back_populates="book")
     loan_book = relationship("Loan", back_populates="book")
+    rating_item = relationship("Rating", back_populates="rec_item")
 
     def __str__(self):
         return self.title
@@ -83,6 +86,9 @@ class Rating(Base):
     item = Column(String, ForeignKey('books.id'), primary_key=True)
     rating = Column(Integer)
 
+    rec_user = relationship("User", back_populates="rating_user")
+    rec_item = relationship("Book", back_populates="rating_item")
+
 
 class UserQnA(Base):
     __tablename__ = 'user_qna'
@@ -92,6 +98,7 @@ class UserQnA(Base):
     content = Column(Text)
     create_at = Column(DateTime)
     is_answered = Column(Boolean)
+
 
 class Loan(Base):
     __tablename__ = 'loan_info'
