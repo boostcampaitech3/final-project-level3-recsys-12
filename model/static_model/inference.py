@@ -43,7 +43,10 @@ def full_inference(k):
     inference_df = pd.DataFrame(columns={'user', 'item', 'score'})
     
     for start_idx in range(0,sparse_data.shape[0], 30000): 
-        end_idx = start_idx + 30000
+        
+        next_idx = start_idx + 30000
+        end_idx = min(next_idx, sparse_data.shape[0])
+
         input_data = sparse2Tensor(sparse_data[start_idx:end_idx]).to(device)
         users = range(start_idx, end_idx)
         model.eval()
@@ -51,19 +54,19 @@ def full_inference(k):
         with torch.no_grad():
             prediction = model(input_data, calculate_loss=False)
             prediction[torch.nonzero(input_data, as_tuple=True)] = -np.inf
-            scores, movies = torch.topk(prediction, dim=1, k=k)
+            scores, books = torch.topk(prediction, dim=1, k=k)
             
             users = np.tile(users, (k,1)).T
             user_list = np.concatenate([user for user in users])
             score_list = torch.cat([score for score in scores])
-            movie_list = torch.cat([movie for movie in movies])
+            book_list = torch.cat([book for book in books])
 
         user_decoder = {value : key for (key, value) in user_encoder.items()}
         item_decoder = {value : key for (key, value) in item_encoder.items()}
         
         temp_df = pd.DataFrame()
         temp_df['user'] = user_list
-        temp_df['item'] = movie_list.cpu().numpy()
+        temp_df['item'] = book_list.cpu().numpy()
         temp_df['score'] = score_list.cpu().numpy()
         
         temp_df['user'] = temp_df['user'].apply(lambda x : user_decoder[x])

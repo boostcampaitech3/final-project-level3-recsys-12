@@ -21,8 +21,8 @@ args = {
     'min_item_to_split' : 5,
     
     #####model######
-    'hidden_dim' : 2000, # 600
-    'latent_dim' : 400, # 200
+    'hidden_dim' : 600, # 600
+    'latent_dim' : 200, # 200
     'stnd_mixture_weight' : 3/20,
     'post_mixture_weight' : 3/4,
     'unif_mixture_weight' : 1/10,
@@ -145,27 +145,30 @@ def inference(trainer, data, k):
 
     for start_idx in range(0, trainer.inference_data.shape[0], 10000):
         
-        end_idx = start_idx + 10000
+        next_idx = start_idx + 10000
+        end_idx = min(next_idx, trainer.inference_data.shape[0])
+        
         input_data = sparse2Tensor(trainer.inference_data[start_idx:end_idx]).to(trainer.device)
+        
         users = range(start_idx, end_idx)
 
         with torch.no_grad():
             prediction = model(input_data, calculate_loss=False)
             print(prediction.size())
             prediction[torch.nonzero(input_data, as_tuple=True)] = -np.inf
-            scores, movies = torch.topk(prediction, dim=1, k=k)
+            scores, books = torch.topk(prediction, dim=1, k=k)
             
             users = np.tile(users, (k,1)).T
             user_list = np.concatenate([user for user in users])
             score_list = torch.cat([score for score in scores])
-            movie_list = torch.cat([movie for movie in movies])
+            book_list = torch.cat([book for book in books])
         
         user_decoder = {value : key for (key, value) in trainer.user_encoder.items()}
         item_decoder = {value : key for (key, value) in trainer.item_encoder.items()}
         
         temp_df = pd.DataFrame()
         temp_df['user'] = user_list
-        temp_df['item'] = movie_list.cpu().numpy()
+        temp_df['item'] = book_list.cpu().numpy()
         temp_df['score'] = score_list.cpu().numpy()
         
         temp_df['user'] = temp_df['user'].apply(lambda x : user_decoder[x])
