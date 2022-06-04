@@ -56,14 +56,14 @@
                         </a>
                     </div>
                     <div class="site-branding pr-md-4">
-                        <a href="http://127.0.0.1:8000/" class="d-block mb-1">
+                        <a href="http://118.67.131.88:30001/" class="d-block mb-1">
                             <img src="{{ url_for('static', path='/assets/img/mark.png') }}" alt="main page" width="200px" height="60px" >
                         </a>
                     </div>
                     <div class="site-navigation mr-auto d-none d-xl-block">
                         <ul class="nav">
-                            <li class="nav-item"><a href="http://127.0.0.1:8000/books" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">자료</a></li>
-                            <li class="nav-item"><a href="http://127.0.0.1:8000/loan_info" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">대출이력</a></li>
+                            <li class="nav-item"><a href="http://118.67.131.88:30001/books" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">자료</a></li>
+                            <li class="nav-item"><a href="http://118.67.131.88:30001/loan_info" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">대출이력</a></li>
                         </ul>
                     </div>
 
@@ -93,7 +93,7 @@
                     </ul>
 
                     <div class="site-search ml-xl-0 ml-md-auto w-r-100 my-2 my-xl-0">
-                        <form class="form-inline" action="http://127.0.0.1:8000/search/title" method="get">
+                        <form class="form-inline" action="http://118.67.131.88:30001/search/title" method="get">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <i class="glph-icon flaticon-loupe input-group-text py-2d75 bg-white-100 border-white-100"></i>
@@ -167,7 +167,7 @@
                     <div class="js-scrollbar u-sidebar__body">
                         <div class="u-sidebar__content u-header-sidebar__content">
                             {% if login_required == True %}
-                            <form method="post" action="http://127.0.0.1:8000/login">
+                            <form method="post" action="http://118.67.131.88:30001/login">
                                 <!-- Login -->
                                 <div id="login1" data-target-group="idForm1">
                                     <!-- Title -->
@@ -207,7 +207,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <form method="post" action="http://127.0.0.1:8000/register">
+                            <form method="post" action="http://118.67.131.88:30001/register">
                                 <!-- Signup -->
                                 <div id="signup1" style="display: none; opacity: 0;" data-target-group="idForm1">
                                     <!-- Title -->
@@ -270,13 +270,13 @@
                                 <!-- End Title -->
 
                                 <div class="p-4 p-md-6">
-                                    <form method="get" action="http://127.0.0.1:8000/mypage">
+                                    <form method="get" action="http://118.67.131.88:30001/mypage">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-dark">My page</button>
                                         </div>                                        
                                     </form>
 
-                                    <form method="get" action="http://127.0.0.1:8000/logout">
+                                    <form method="get" action="http://118.67.131.88:30001/logout">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-light">Log out</button>
                                         </div>                                        
@@ -321,7 +321,7 @@
                     <div class="js-scrollbar u-sidebar__body">
                         <div class="u-sidebar__content u-header-sidebar__content">
                             {% if login_required == True %}
-                            <form method="post" action="http://127.0.0.1:8000/login">
+                            <form method="post" action="http://118.67.131.88:30001/login">
                                 <!-- Login -->
                                 <div id="login" data-target-group="idForm">
                                     <!-- Title -->
@@ -360,7 +360,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <form method="post" action="http://127.0.0.1:8000/register">
+                            <form method="post" action="http://118.67.131.88:30001/register">
                                 <!-- Signup -->
                                 <div id="signup" style="display: none; opacity: 0;" data-target-group="idForm">
                                     <!-- Title -->
@@ -423,13 +423,13 @@
                                 <!-- End Title -->
 
                                 <div class="p-4 p-md-6">
-                                    <form method="get" action="http://127.0.0.1:8000/mypage">
+                                    <form method="get" action="http://118.67.131.88:30001/mypage">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-dark">My page</button>
                                         </div>                                        
                                     </form>
 
-                                    <form method="get" action="http://127.0.0.1:8000/logout">
+                                    <form method="get" action="http://118.67.131.88:30001/logout">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-light">Log out</button>
                                         </div>                                        
@@ -545,12 +545,12 @@
                                             <div class="product__inner overflow-hidden p-3 p-md-4d875">
                                                 <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
                                                     <div class="woocommerce-loop-product__thumbnail">
-                                                        <a href="http://127.0.0.1:8000/books/{{book.id}}" class="d-block"><img src="{{book.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
+                                                        <a href="http://118.67.131.88:30001/books/{{book.id}}" class="d-block"><img src="{{book.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
                                                     </div>
                                                     <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
                                                         <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="../shop/single-product-v1.html">Paperback</a></div>
-                                                        <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="http://127.0.0.1:8000/books/{{book.id}}">{{book.title}}</a></h2>
-                                                        <div class="font-size-2  mb-1 text-truncate"><a href="http://127.0.0.1:8000/books/{{book.id}}" class="text-gray-700">Jay Shetty</a></div>
+                                                        <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="http://118.67.131.88:30001/books/{{book.id}}">{{book.title}}</a></h2>
+                                                        <div class="font-size-2  mb-1 text-truncate"><a href="http://118.67.131.88:30001/books/{{book.id}}" class="text-gray-700">Jay Shetty</a></div>
                                                         <div class="price d-flex align-items-center font-weight-medium font-size-3">
                                                             <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>29</span>
                                                         </div>
@@ -809,7 +809,7 @@
                                     <ul class="product-categories">
                                         {% for genre in popular_genre %}
                                             <li class="cat-item cat-item-9 cat-parent">
-                                                <a href="http://127.0.0.1:8000/books/populargenre/{{genre.genre_id}}">{{genre.genre_name}}</a>                           
+                                                <a href="http://118.67.131.88:30001/books/populargenre/{{genre.genre_id}}">{{genre.genre_name}}</a>                           
                                             </li>
                                         {% endfor %}
                                         
@@ -852,7 +852,7 @@
                                     <ul class="product-categories">
                                         {% for author in popular_author %}
                                             <li class="cat-item cat-item-9 cat-parent">
-                                                <a href="http://127.0.0.1:8000/books/popularauthor/{{author.author_id}}">{{author.author_name}}</a>
+                                                <a href="http://118.67.131.88:30001/books/popularauthor/{{author.author_id}}">{{author.author_name}}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -920,10 +920,10 @@
                                         <div class="product__inner overflow-hidden p-3 p-md-4">
                                             <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
                                                 <div class="woocommerce-loop-product__thumbnail">
-                                                    <a href="http://127.0.0.1:8000/books/{{rec.id}}" class="d-block"><img src="{{rec.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
+                                                    <a href="http://118.67.131.88:30001/books/{{rec.id}}" class="d-block"><img src="{{rec.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
                                                 </div>
                                                 <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
-                                                    <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="http://127.0.0.1:8000/books/{{rec.id}}">{{rec.title}}</a></h2>
+                                                    <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="http://118.67.131.88:30001/books/{{rec.id}}">{{rec.title}}</a></h2>
                                                     <div class="font-size-2  mb-1 text-truncate"><a href="../others/authors-single.html" class="text-gray-700">{{rec.publisher}}</a></div>
                     
                                                 </div>
@@ -1022,12 +1022,12 @@
                                         <div class="product__inner overflow-hidden p-3 p-md-4d875">
                                             <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
                                                 <div class="woocommerce-loop-product__thumbnail">
-                                                    <a href="http://127.0.0.1:8000/books/{{book.id}}" class="d-block"><img src="{{book.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
+                                                    <a href="http://118.67.131.88:30001/books/{{book.id}}" class="d-block"><img src="{{book.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
                                                 </div>
                                                 <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
                                                     <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="../shop/single-product-v3.html">Paperback</a></div>
-                                                    <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="http://127.0.0.1:8000/books/{{book.id}}">{{book.title}}</a></h2>
-                                                    <div class="font-size-2  mb-1 text-truncate"><a href="http://127.0.0.1:8000/books/{{book.id}}" class="text-gray-700">Jay Shetty</a></div>
+                                                    <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="http://118.67.131.88:30001/books/{{book.id}}">{{book.title}}</a></h2>
+                                                    <div class="font-size-2  mb-1 text-truncate"><a href="http://118.67.131.88:30001/books/{{book.id}}" class="text-gray-700">Jay Shetty</a></div>
                                                     <div class="price d-flex align-items-center font-weight-medium font-size-3">
                                                         <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>29</span>
                                                     </div>
@@ -1287,7 +1287,7 @@
                                     <ul class="product-categories">
                                         {% for genre in popular_genre %}
                                             <li class="cat-item cat-item-9 cat-parent">
-                                                <a href="http://127.0.0.1:8000/books/populargenre/{{genre.genre_id}}">{{genre.genre_name}}</a>                           
+                                                <a href="http://118.67.131.88:30001/books/populargenre/{{genre.genre_id}}">{{genre.genre_name}}</a>                           
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -1329,7 +1329,7 @@
                                     <ul class="product-categories">
                                         {% for author in popular_author %}
                                             <li class="cat-item cat-item-9 cat-parent">
-                                                <a href="http://127.0.0.1:8000/books/popularauthor/{{author.author_id}}">{{author.author_name}}</a>
+                                                <a href="http://118.67.131.88:30001/books/popularauthor/{{author.author_id}}">{{author.author_name}}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>

@@ -1,7 +1,9 @@
-import os, gc, json, time
+import os, sys,  gc, json, time
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import pandas as pd
-from .database import engine
-from crud import pwd_context
+from db.database import engine
+from db.crud import pwd_context
 
 from typing import Tuple, List
 
@@ -23,7 +25,6 @@ def get_rating_datas(file_path) -> dict:
     user_name = []
     rating = []
     isbn = []
-    review_summary = []
 
     for data in generate_json:
         if data['asin'][0] == 'B': continue
@@ -32,9 +33,7 @@ def get_rating_datas(file_path) -> dict:
         else: user_name.append('')
         rating.append(data['overall'])
         isbn.append(data['asin'])
-        if 'summary' in data: review_summary.append(data['summary'])
-        else: review_summary.append('')
-        
+
     take_time = time.time() - start_time
     print(f'\tread json file and parse done! {int(take_time//3600)}h {int((take_time % 3600) // 60)}m {int(take_time % 60)}s')
 
@@ -43,7 +42,6 @@ def get_rating_datas(file_path) -> dict:
         'user_name': user_name,
         'rating': rating,
         'isbn': isbn,
-        'review_summary': review_summary,
     }
 
 
@@ -63,13 +61,18 @@ def make_users_df(ids: list, names: list) -> pd.DataFrame:
     return users_df
 
 
-def make_ratings_df(users: List[str], items: List[str], ratings: List[str], reviews: List[str]) -> pd.DataFrame:
+def make_ratings_df(users: List[str], items: List[str], ratings: List[str]) -> pd.DataFrame:
     ratings_df = pd.DataFrame()
     ratings_df['user'] = users
     ratings_df['item'] = items
     ratings_df['rating'] = ratings
     ratings_df['rating'] = ratings_df['rating'].astype('int8')
-    # ratings_df['reivew'] = reviews
+
+    # 한 유저가 같은 아이템에 대해 여러 rating을 줘서 일단 제일 높은 것을 고른다.
+    # 향후엔 제일 최근 rating을 가져오는 게 좋을 것 같다.
+    ratings_df.sort_values(['rating'], ascending=False, inplace=True)
+    ratings_df.drop_duplicates(subset=['item', 'user'], keep='first', inplace=True)
+    ratings_df.reset_index(drop=True)
 
     return ratings_df
 
@@ -85,8 +88,7 @@ def preprocessing_rating_json(file_path: str) -> Tuple[pd.DataFrame, pd.DataFram
     ratings_df = make_ratings_df(
         users=datas_dict['user_id'],
         items=datas_dict['isbn'],
-        ratings=datas_dict['rating'],
-        reviews=datas_dict['review_summary'] ,   
+        ratings=datas_dict['rating'], 
     )
     print('\tratings df done!')
     take_time = time.time() - start_time
@@ -95,80 +97,89 @@ def preprocessing_rating_json(file_path: str) -> Tuple[pd.DataFrame, pd.DataFram
     return users_df, ratings_df
 
 
-def make_df_of_meta(gen_meta, gen_img):
-    isbns, img_isbns, titles, genres, img_urls = list(), list(), list(), list(), list()
+def make_df_of_meta(gen_meta, img_etc_df) -> pd.DataFrame:
+    isbns, titles = list(), list()
 
     for data in gen_meta:
         if data['asin'][0] == 'B': continue
         isbns.append(data['asin'])
         titles.append(data['title'])
-        genres.append(data['category'])
-        # if data['description']: description.append(data['description'][0])
-        # else: description.append('')
-        # author.append(data['brand'])
 
-    for data in gen_img:
-        img_isbns.append(data['isbn'])
-        img_urls.append(data['url'])
-
-    books_img = pd.DataFrame()
-    books_img['id'] = img_isbns
-    books_img['image_URL'] = img_urls
 
     books = pd.DataFrame()
     books['id'] = isbns
     books['title'] = titles
 
-    book_merge = pd.merge(books, books_img, left_on='id', right_on='id', how='left')
+    book_merge = pd.merge(books, img_etc_df, left_on='id', right_on='id', how='left')
 
-    return book_merge, genres
+    return book_merge
 
 
-def get_meta_datas_df(file_path: str, img_file_path: str) -> pd.DataFrame:
+def get_meta_datas_df(file_path: str, img_etc_path: str) -> pd.DataFrame:
     gen_meta_json = load_json_data(file_path)
-    gen_img_json = load_json_data(img_file_path)
+    img_etc_df = pd.read_csv(img_etc_path, sep='\t')
+    img_etc_df.drop(labels='title', axis=1, inplace=True)
+    img_etc_df['publication_year'] = img_etc_df.apply(
+                                lambda row: 0 if row['publication_year']=='None' else row['publication_year'][:4],
+                                axis=1
+                            )
 
-    books, genres = make_df_of_meta(gen_meta_json, gen_img_json)
-    return books, genres
+    books = make_df_of_meta(gen_meta_json, img_etc_df)
+    return books
 
 
-def make_df_of_genre(gen_meta, genres: list) -> Tuple[list, list]:
-    genre_df = pd.DataFrame()
-    split_genre = list()
-
-    for genre in genres:
-        if genre:
-            split_genre.extend(genre)
-    split_genre = list(set(split_genre))
-    genre_df['name'] = split_genre
-    genre_df['id'] = genre_df.index
-
-    book_genre_id, book_genre_genre = list(), list()
-    book_genre_df = pd.DataFrame()
-
-    for data in gen_meta:
-        if data['asin'][0] == 'B': continue
-        if data['category']:
-            for genre in data['category']:
-                book_genre_id.append(data['asin'])
-                book_genre_genre.append(split_genre.index(genre))
+def preprocessing_book_meta_json(file_path: str, img_etc_path: str) -> pd.DataFrame:
+    print('preprocessing book meta json...: make book df')
+    start_time = time.time()
+    book_df = get_meta_datas_df(file_path, img_etc_path)
     
-    book_genre_df['book_id'] = book_genre_id
-    book_genre_df['genre_id'] = book_genre_genre
+    take_time = time.time() - start_time
+    print(f'preprocessing book meta json done! {int(take_time//3600)}h {int((take_time % 3600) // 60)}m {int(take_time % 60)}s')
+    return book_df
+
+
+def preprocessing_book_genre(
+    genre_path: str,
+    book_genre_path: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
+
+    print('preprocessing genre tsv ...: make genre, book_genre df')
+    start_time = time.time()
+
+    genre_df = pd.read_csv(genre_path, sep='\t')
+    book_genre_df = pd.read_csv(book_genre_path, sep='\t')
+
+    take_time = time.time() - start_time
+    print(f'preprocessing genre tsv done! {int(take_time//3600)}h {int((take_time % 3600) // 60)}m {int(take_time % 60)}s')
 
     return genre_df, book_genre_df
 
+def preprocessing_book_author(
+    author_path: str,
+    book_autor_path: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
-def get_genre_df(file_path: str, genres: list):
-    gen_meta_json = load_json_data(file_path)
-    genre_df, book_genre_df = make_df_of_genre(gen_meta_json, genres)
-    return genre_df, book_genre_df
+    print('preprocessing author tsv ...: make author, book_author df')
+    start_time = time.time()
 
+    author_df = pd.read_csv(author_path, sep='\t')
+    book_autor_df = pd.read_csv(book_autor_path, sep='\t')
 
-def preprocessing_book_meta_json(file_path: str, img_file_path: str):
-    book_df, genres = get_meta_datas_df(file_path, img_file_path)
-    genre_df, book_genre_df = get_genre_df(file_path, genres)
-    return book_df, genre_df, book_genre_df
+    take_time = time.time() - start_time
+    print(f'preprocessing author tsv done! {int(take_time//3600)}h {int((take_time % 3600) // 60)}m {int(take_time % 60)}s')
+
+    return author_df, book_autor_df
+
+def preprocessing_inference(
+    inference_path: str)-> Tuple[pd.DataFrame, pd.DataFrame]:
+
+    print('preprocessing inference csv ...: make author, book_author df')
+    start_time = time.time()
+
+    inference_df = pd.read_csv(inference_path)
+
+    take_time = time.time() - start_time
+    print(f'preprocessing inference csv done! {int(take_time//3600)}h {int((take_time % 3600) // 60)}m {int(take_time % 60)}s')
+
+    return inference_df
 
 
 def insert_datas(df: pd.DataFrame, engine, table_name: str) -> None:
@@ -181,15 +192,30 @@ def insert_datas(df: pd.DataFrame, engine, table_name: str) -> None:
 
 
 if __name__ == '__main__':
-    # excute: nohup /opt/conda/envs/web/bin/python -u /opt/ml/recsys12/Backend/db/load_data.py > /opt/ml/db.log &
-    base_dir = os.path.join(os.path.dirname(__file__), 'datas', 'json')
-    users_df, ratings_df = preprocessing_rating_json(os.path.join(base_dir, 'Books.json'))
-    book_df, genre_df, book_genre_df = preprocessing_book_meta_json(
-        file_path=os.path.join(base_dir, 'Books.json'),
-        img_file_path=os.path.join(base_dir, 'img_url_ver2.json'))
+    # excute: nohup /opt/conda/envs/web/bin/python -u /opt/ml/recsys12/Backend/db/load_json_data.py > /opt/ml/db.log &
+    base_json_dir = os.path.join(os.path.dirname(__file__), 'datas', 'json')
+    base_tsv_dir = os.path.join(os.path.dirname(__file__), 'datas', 'tsv')
 
-    df_datas = [users_df, book_df, genre_df, book_genre_df]
-    table_names = ['users', 'books', 'genres', 'book_genres']
+
+    users_df, ratings_df = preprocessing_rating_json(os.path.join(base_json_dir, 'Books.json'))
+    book_df = preprocessing_book_meta_json(
+        file_path=os.path.join(base_json_dir, 'meta_Books.json'), 
+        img_etc_path=os.path.join(base_tsv_dir, 'Book.tsv'))
+    
+    genre_df, book_genre_df = preprocessing_book_genre(
+        genre_path=os.path.join(base_tsv_dir, 'Genre.tsv'),
+        book_genre_path=os.path.join(base_tsv_dir, 'Book_Genre.tsv'))
+
+    author_df, book_author_df = preprocessing_book_author(
+        author_path=os.path.join(base_tsv_dir, 'Author.tsv'),
+        book_autor_path=os.path.join(base_tsv_dir, 'Book_Author.tsv'))
+
+    inference_df = preprocessing_inference(inference_path=os.path.join(base_tsv_dir, "output.csv"))
+        
+
+
+    df_datas = [users_df, book_df, genre_df, author_df, inference_df, book_genre_df, book_author_df, ratings_df]
+    table_names = ['users', 'books', 'genres', 'authors', 'inference', 'book_genres', 'book_authors', 'ratings']
 
     for df, table_name in zip(df_datas, table_names):
         print(f'load {table_name}...')

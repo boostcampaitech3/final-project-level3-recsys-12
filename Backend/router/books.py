@@ -140,8 +140,12 @@ def read_genre(request: Request, db: Session = Depends(get_db), current_user: mo
 @book_router.get("/{book_id}", response_class=HTMLResponse)
 async def read_item(request: Request, db: Session = Depends(get_db), book_id: str= "", current_user: models.User = Depends(get_current_user)):
     book = crud.get_item(db, item_id=book_id)
-    book_authors = crud.get_authors_by_item(db, item_id=book_id)[0].author_id
-    author = crud.get_item_by_author(db, author_id=book_authors)
+    if crud.get_authors_by_item(db, item_id=book_id):
+        book_authors = crud.get_authors_by_item(db, item_id=book_id)[0].author_id
+        author = crud.get_item_by_author(db, author_id=book_authors)
+    else:
+        book_authors = ""
+        author = ""
 
     if current_user:
         loan_status = False if crud.get_loan_info(db, current_user.id, book_id) else True
@@ -190,7 +194,7 @@ async def rating(
         return templates.TemplateResponse("html/others/account_fail.html", context)
     else:          
         crud.create_user_item_rating(db, user_id=current_user.id, book_id=book_id, rating=rating)
-        response = RedirectResponse(url=f"http://127.0.0.1:8000/books/{book_id}")
+        response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
         response.status_code = 302
         return response
 
@@ -204,7 +208,7 @@ async def modify_rating(
     ) -> RedirectResponse:
 
     crud.modify_user_item_rating(db, user_id=current_user.id, book_id=book_id, rating=rating)
-    response = RedirectResponse(url=f"http://127.0.0.1:8000/books/{book_id}")
+    response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
     response.status_code = 302
     return response
 
@@ -219,14 +223,16 @@ def loan_book_func(request: Request, book_id: str, db: Session = Depends(get_db)
         return templates.TemplateResponse("html/others/account_fail.html", context)
     else:          
         crud.create_book_loan(db, current_user.id, book_id)
-        response = RedirectResponse(url=f"http://127.0.0.1:8000/books/{book_id}")
+        response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
         response.status_code = 302
         return response
 
+
+# redirect 주소 수정
 @book_router.get("/{book_id}/return")
 def return_book_func(book_id: str, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # book_id = '0001844423'
     crud.return_book(db, current_user.id, book_id)
-    response = RedirectResponse(url=f"http://127.0.0.1:8000/books/{book_id}")
+    response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
     response.status_code = 302
     return response

@@ -69,7 +69,11 @@ def get_items_by_title(db:Session, title: str):
 
 # 아이템의 저자 찾기
 def get_authors_by_item(db:Session, item_id: str):
-    return db.query(models.Book).filter(models.Book.id == item_id).first().authors
+    book_info = db.query(models.Book).filter(models.Book.id == item_id).first()
+    if book_info:
+        return book_info.authors
+    else:
+        return None
 
 # 저자 정보로 책 찾기
 def get_item_by_author(db:Session, author_id: str):

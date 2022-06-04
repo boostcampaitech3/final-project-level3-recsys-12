@@ -21,9 +21,8 @@ async def get_rec_result(request: Request, user_id: str, db: Session = Depends(g
         book_info['isbn'] = inference_book.item_info.id
         book_info['title'] = inference_book.item_info.title
         book_info['url'] = inference_book.item_info.image_URL
+        book_info['description'] = inference_book.item_info.synopsis
 
         inference_dict[f'rec{idx+1}'] = book_info
-    
-    print(inference_dict)
 
     return JSONResponse(content=inference_dict)

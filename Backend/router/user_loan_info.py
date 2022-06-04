@@ -15,7 +15,6 @@ loan_info = APIRouter(prefix="/loan_info")
 # resource를 식별해야하므로 path parameter가 더 적합
 @loan_info.get("/", response_class=JSONResponse)
 def user_loan_info(request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    print(request.__dict__)
     context = {'request': request}
     if current_user is False:
         context['login_required'] = True
@@ -46,6 +45,7 @@ def user_loan_info(request: Request, db: Session = Depends(get_db), current_user
         context['loaned_info'] = sorted_loaned_books
         context['returned_info'] = sorted_retured_books
         context['all_loan_length'] = len(list_loaned_books) + len(list_returned_books)
-        context['previous_url'] = 'http://118.67.131.88:30001/loan_info/'
-
-        return templates.TemplateResponse(os.path.join('html', 'shop', 'cart.html'), context=context)
+        
+        response = templates.TemplateResponse(os.path.join('html', 'shop', 'cart.html'), context=context)
+        response.set_cookie(key="previous_url", value="http://118.67.131.88:30001/loan_info/", httponly=True)
+        return response
