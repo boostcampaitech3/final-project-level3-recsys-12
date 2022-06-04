@@ -1,8 +1,11 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text, Numeric
 from sqlalchemy.orm import relationship
-from db.database import Base, engine
+
+from .database import Base, engine
+
 
 
 class User(Base):
@@ -45,6 +48,7 @@ class Genre(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+
     books = relationship("BookGenre", back_populates="genre")
 
     def __str__(self):
@@ -56,6 +60,7 @@ class Author(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+    
     books = relationship("BookAuthor", back_populates='author')
 
     def __str__(self):
@@ -97,7 +102,7 @@ class UserQnA(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(String, ForeignKey('users.id'))
     content = Column(Text)
-    create_at = Column(DateTime)
+    create_date = Column(DateTime)
     is_answered = Column(Boolean)
 
 
@@ -122,6 +127,7 @@ class Inference(Base):
 
     user_info = relationship("User", back_populates="inference_user")
     item_info = relationship("Book", back_populates="inference_item")
+
 
 if __name__ == '__main__':
     Base.metadata.create_all(bind=engine)

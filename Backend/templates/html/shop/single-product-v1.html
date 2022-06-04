@@ -4,12 +4,12 @@
 <div class="page-header border-bottom">
     <div class="container">
         <div class="d-md-flex justify-content-between align-items-center py-4">
-            <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">Shop Single</h1>
+            <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">상세 정보</h1>
             <nav class="woocommerce-breadcrumb font-size-2">
                 <a href="../home/index.html" class="h-primary">Home</a>
                 <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>
-                <a href="../shop/v1.html" class="h-primary">Shop</a>
-                <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>Shop Single
+                <a href="../shop/v1.html" class="h-primary">자료</a>
+                <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>상세 자료
             </nav>
         </div>
     </div>
@@ -80,77 +80,68 @@
                        
                 
                             </div>
-                            <p class="price font-size-22 font-weight-medium mb-3">
-                                <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>29.95
-                                </span> –
-                                <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">$</span>59.95
-                                </span>
-                            </p>
-                            <div class="mb-2 font-size-2">
-                                <span class="font-weight-medium">Book Format:</span>
-                                <span class="ml-2 text-gray-600">Choose an option</span>
-                            </div>
-                            <!-- Radio Checkbox Group -->
-                            <div class="row mx-gutters-2 mb-4">
-                                <div class="col-6 col-md-3 mb-3 mb-md-0">
-                                    <div class="">
-                                        <input type="radio" id="typeOfListingRadio1" name="typeOfListingRadio1" class="custom-control-input checkbox-outline__input">
-                                        <label class="border-bottom d-block checkbox-outline__label py-3 px-1 mb-0" for="typeOfListingRadio1">
-                                            <span class="d-block">Hardcover</span>
-                                            <span class="">$9.59</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3 mb-3 mb-md-0">
-                                    <div class="">
-                                        <input type="radio" id="typeOfListingRadio2" name="typeOfListingRadio1" class="custom-control-input checkbox-outline__input" checked>
-                                        <label class="border-bottom d-block checkbox-outline__label py-3 px-1 mb-0" for="typeOfListingRadio2">
-                                            <span class="d-block">Paperback</span>
-                                            <span class="">$9.59</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="">
-                                        <input type="radio" id="typeOfListingRadio3" name="typeOfListingRadio1" class="custom-control-input checkbox-outline__input">
-                                        <label class="border-bottom d-block checkbox-outline__label py-3 px-1 mb-0" for="typeOfListingRadio3">
-                                            <span class="d-block">Kindle</span>
-                                            <span class="">$9.59</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Radio Checkbox Group -->
 
                             <div class="woocommerce-product-details__short-description font-size-2 mb-5">
                                 <p class="">{{book.synopsis}}</p>
                             </div>
 
                             <div class="cart d-md-flex align-items-center">
-                                <form class="quantity mb-4 mb-md-0 d-flex align-items-center" method="post" enctype="multipart/form-data">
-                                    <div class="border px-3 width-120">
-                                        <div class="js-quantity">
-                                            <div class="d-flex align-items-center">
-                                                <label class="screen-reader-text sr-only">Quantity</label>
-                                                <a class="js-minus text-dark" href="javascript:;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="1px">
-                                                        <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M-0.000,-0.000 L10.000,-0.000 L10.000,1.000 L-0.000,1.000 L-0.000,-0.000 Z" />
-                                                    </svg>
-                                                </a>
-                                                <input type="number" class="input-text qty text js-result form-control text-center border-0" step="1" min="1" max="5" name="quantity" value="1" title="Qty">
-                                                <a class="js-plus text-dark" href="javascript:;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
-                                                        <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M10.000,5.000 L6.000,5.000 L6.000,10.000 L5.000,10.000 L5.000,5.000 L-0.000,5.000 L-0.000,4.000 L5.000,4.000 L5.000,-0.000 L6.000,-0.000 L6.000,4.000 L10.000,4.000 L10.000,5.000 Z" />
-                                                    </svg>
-                                                </a>
-                                                <button class="screen-reader-text sr-only" type="submit">제출</button>
+                                {% if rating == 0 %}
+                                    <form action="{{book.id}}/ratingcreate" class="quantity mb-4 mb-md-0 d-flex align-items-center" method="post">
+                                        <div class="border px-3 width-120">
+                                            <div class="js-quantity">
+                                                <div class="d-flex align-items-center">
+                                                    <label class="screen-reader-text sr-only">Quantity</label>
+                                                    <a class="js-minus text-dark" href="javascript:;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="1px">
+                                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M-0.000,-0.000 L10.000,-0.000 L10.000,1.000 L-0.000,1.000 L-0.000,-0.000 Z" />
+                                                        </svg>
+                                                    </a>
+                                                    <input type="number" class="input-text qty text js-result form-control text-center border-0" step="1" min="1" max="5" name="rating" value="1" title="Qty">
+                                                    <a class="js-plus text-dark" href="javascript:;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M10.000,5.000 L6.000,5.000 L6.000,10.000 L5.000,10.000 L5.000,5.000 L-0.000,5.000 L-0.000,4.000 L5.000,4.000 L5.000,-0.000 L6.000,-0.000 L6.000,4.000 L10.000,4.000 L10.000,5.000 Z" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                                <button type="submit" name="add-to-cart" value="7145" class="btn btn-dark border-0 rounded-0 p-3 min-width-250 ml-md-4 single_add_to_cart_button button alt">대출</button>
+                                        <button  type="submit" name="" value="" class="btn btn-primary border-0 rounded-0 p-3 min-width-200 ml-md-4 single_add_to_cart_button button alt">평가</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{book.id}}/ratingmodify" class="quantity mb-4 mb-md-0 d-flex align-items-center" method="post" enctype="multipart/form-data">
+                                        <div class="border px-3 width-120">
+                                            <div class="js-quantity">
+                                                <div class="d-flex align-items-center">
+                                                    <label class="screen-reader-text sr-only">Quantity</label>
+                                                    <a class="js-minus text-dark" href="javascript:;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="1px">
+                                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M-0.000,-0.000 L10.000,-0.000 L10.000,1.000 L-0.000,1.000 L-0.000,-0.000 Z" />
+                                                        </svg>
+                                                    </a>
+                                                    <input type="number" class="input-text qty text js-result form-control text-center border-0" step="1" min="1" max="5" name="rating" value="1" title="Qty">
+                                                    <a class="js-plus text-dark" href="javascript:;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M10.000,5.000 L6.000,5.000 L6.000,10.000 L5.000,10.000 L5.000,5.000 L-0.000,5.000 L-0.000,4.000 L5.000,4.000 L5.000,-0.000 L6.000,-0.000 L6.000,4.000 L10.000,4.000 L10.000,5.000 Z" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button  type="submit" name="" value="" class="btn btn-primary border-0 rounded-0 p-3 min-width-200 ml-md-4 single_add_to_cart_button button alt">평가</button>
+                                    </form>
+                                {% endif %}
+
+                                {% if loan_status == True %}
+                                    <form action="{{book.id}}/loan" method="get">
+                                        <button type="submit" name="add-to-cart" value="7145" class="btn btn-dark border-0 rounded-0 p-3 min-width-250 ml-md-4 single_add_to_cart_button button alt">대출</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{book.id}}/return" method="get">
+                                        <button type="submit" name="add-to-cart" value="7145" class="btn btn-dark border-0 rounded-0 p-3 min-width-250 ml-md-4 single_add_to_cart_button button alt">반납</button>
+                                    </form>
+                                {% endif %}
+                               
 
                             </div>
 

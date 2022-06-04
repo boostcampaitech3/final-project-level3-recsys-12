@@ -56,14 +56,14 @@
                         </a>
                     </div>
                     <div class="site-branding pr-md-4">
-                        <a href="http://118.67.131.88:30001/" class="d-block mb-1">
+                        <a href="http://127.0.0.1:8000/" class="d-block mb-1">
                             <img src="{{ url_for('static', path='/assets/img/mark.png') }}" alt="main page" width="200px" height="60px" >
                         </a>
                     </div>
                     <div class="site-navigation mr-auto d-none d-xl-block">
                         <ul class="nav">
-                            <li class="nav-item"><a href="http://118.67.131.88:30001/loan_info" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">자료</a></li>
-                            <li class="nav-item"><a href="http://118.67.131.88:30001/loan_info" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">대출이력</a></li>
+                            <li class="nav-item"><a href="http://127.0.0.1:8000/books" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">자료</a></li>
+                            <li class="nav-item"><a href="http://127.0.0.1:8000/loan_info" class="nav-link link-black-100 mx-4 px-0 py-5 font-weight-medium active">대출이력</a></li>
                         </ul>
                     </div>
 
@@ -93,12 +93,12 @@
                     </ul>
 
                     <div class="site-search ml-xl-0 ml-md-auto w-r-100 my-2 my-xl-0">
-                        <form class="form-inline">
+                        <form class="form-inline" action="http://127.0.0.1:8000/search/title" method="get">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <i class="glph-icon flaticon-loupe input-group-text py-2d75 bg-white-100 border-white-100"></i>
                                 </div>
-                                <input class="form-control bg-white-100 min-width-380 py-2d75 height-4 border-white-100" type="search" placeholder="Search for Books by Keyword ..." aria-label="Search">
+                                <input class="form-control bg-white-100 min-width-380 py-2d75 height-4 border-white-100" type="search" placeholder="Search for Books by Keyword ..." aria-label="Search" name="text">
                             </div>
                             <button class="btn btn-outline-success my-2 my-sm-0 sr-only" type="submit">Search</button>
                         </form>
@@ -140,6 +140,8 @@
         </div>
     </header>
 
+
+    
     <!-- Account Sidebar Navigation - Mobile -->
     <aside id="sidebarContent9" class="u-sidebar u-sidebar__lg" aria-labelledby="sidebarNavToggler9">
         <div class="u-sidebar__scroller">
@@ -167,7 +169,7 @@
                     <div class="js-scrollbar u-sidebar__body">
                         <div class="u-sidebar__content u-header-sidebar__content">
                             {% if login_required == True %}
-                            <form method="post" action="http://118.67.131.88:30001/login">
+                            <form method="post" action="http://127.0.0.1:8000/login">
                                 <!-- Login -->
                                 <div id="login1" data-target-group="idForm1">
                                     <!-- Title -->
@@ -207,7 +209,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <form method="post" action="http://118.67.131.88:30001/register">
+                            <form method="post" action="http://127.0.0.1:8000/register">
                                 <!-- Signup -->
                                 <div id="signup1" style="display: none; opacity: 0;" data-target-group="idForm1">
                                     <!-- Title -->
@@ -260,7 +262,6 @@
                                 </div>
                                 <!-- End Signup -->
                             </form>
-                            </form>
                             {% else %}
                             <!-- My page, Logout -->
                             <div id="mypage" data-target-group="idForm">
@@ -271,13 +272,13 @@
                                 <!-- End Title -->
 
                                 <div class="p-4 p-md-6">
-                                    <form method="get" action="http://118.67.131.88:30001/mypage">
+                                    <form method="get" action="http://127.0.0.1:8000/mypage">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-dark">My page</button>
                                         </div>                                        
                                     </form>
 
-                                    <form method="get" action="http://118.67.131.88:30001/logout">
+                                    <form method="get" action="http://127.0.0.1:8000/logout">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-light">Log out</button>
                                         </div>                                        
@@ -293,6 +294,7 @@
         </div>
     </aside>
     <!-- End Account Sidebar Navigation - Mobile -->
+
 
     <!-- Account Sidebar Navigation - Desktop -->
     <aside id="sidebarContent" class="u-sidebar u-sidebar__lg" aria-labelledby="sidebarNavToggler">
@@ -321,7 +323,7 @@
                     <div class="js-scrollbar u-sidebar__body">
                         <div class="u-sidebar__content u-header-sidebar__content">
                             {% if login_required == True %}
-                            <form method="post" action="http://118.67.131.88:30001/login">
+                            <form method="post" action="http://127.0.0.1:8000/login">
                                 <!-- Login -->
                                 <div id="login" data-target-group="idForm">
                                     <!-- Title -->
@@ -360,7 +362,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <form method="post" action="http://118.67.131.88:30001/register">
+                            <form method="post" action="http://127.0.0.1:8000/register">
                                 <!-- Signup -->
                                 <div id="signup" style="display: none; opacity: 0;" data-target-group="idForm">
                                     <!-- Title -->
@@ -423,13 +425,13 @@
                                 <!-- End Title -->
 
                                 <div class="p-4 p-md-6">
-                                    <form method="get" action="http://118.67.131.88:30001/mypage">
+                                    <form method="get" action="http://127.0.0.1:8000/mypage">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-dark">My page</button>
                                         </div>                                        
                                     </form>
 
-                                    <form method="get" action="http://118.67.131.88:30001/logout">
+                                    <form method="get" action="http://127.0.0.1:8000/logout">
                                         <div class="mb-4d75">
                                             <button type="submit" class="btn btn-block py-3 rounded-0 btn-light">Log out</button>
                                         </div>                                        
@@ -450,8 +452,8 @@
 
     <!-- ====== MAIN CONTENT ====== -->
     {% block main_content %}
+    {% endblock main_content %}
     
-    {% endblock  %}
     <!-- ====== END MAIN CONTENT ====== -->
 
     <!-- ========== FOOTER ========== -->

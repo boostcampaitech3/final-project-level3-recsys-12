@@ -1,10 +1,12 @@
+from itertools import groupby
+from operator import ge
+from typing import List
 import os, yaml
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
-from db import models, schemas
-
-from sqlalchemy import desc
+from sqlalchemy import desc, and_, func, distinct
+from . import models, schemas
+from collections import Counter
 from passlib.context import CryptContext
 
 
@@ -31,14 +33,30 @@ def create_user(db: Session, user: schemas.UserCreate, user_info: schemas.User):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    return db_user
+
 
 
 def all_genres(db:Session):
     return db.query(models.Genre).all()
 
+# def all_items(db:Session):
+#     return db.query(models.Book).all()
+
+def all_items(db:Session, skip: int = 0, limit: int = 12):
+    return db.query(models.Book).offset(skip).limit(limit).all()
+
+def get_genre(db:Session, genre_id: int):
+    return db.query(models.Genre).filter(models.Genre.id == genre_id).first()
+
+def get_author(db:Session, author_id: int):
+    return db.query(models.Author).filter(models.Author.id == author_id).first()
+
+def get_genres(db:Session, genre_id: int):
+    return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
 
 # 최신 책 찾기
-def get_recent_item(db: Session, skip: int = 0, limit: int = 2):
+def get_recent_item(db: Session, skip: int = 0, limit: int = 7):
     return db.query(models.Book).order_by(desc(models.Book.publication_year)).offset(skip).limit(limit).all()
 
 # ID로 책 찾기
@@ -48,6 +66,14 @@ def get_item(db:Session, item_id: str):
 # 제목으로 책 찾기
 def get_items_by_title(db:Session, title: str):
     return db.query(models.Book).filter(models.Book.title == title).first()
+
+# 아이템의 저자 찾기
+def get_authors_by_item(db:Session, item_id: str):
+    return db.query(models.Book).filter(models.Book.id == item_id).first().authors
+
+# 저자 정보로 책 찾기
+def get_item_by_author(db:Session, author_id: str):
+    return db.query(models.Author).filter(models.Author.id == author_id).first()
 
 
 # 해당 연도 책 찾기
@@ -59,7 +85,7 @@ def get_items_on_year(db:Session, year: int):
 def get_items_by_genre(db:Session, genre_id: int):
     return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
 
-# 각 저자별 책 정보 모음
+# 해당 저자가 쓴 책 정보 모음
 def get_items_by_author(db:Session, author_id: int):
     return db.query(models.Author).filter(models.Author.id == author_id).first().books
 
@@ -72,12 +98,55 @@ def search_by_title(db:Session, search_text: str):
 # 책 내용으로 검색하기
 def search_by_description(db:Session, search_text: str):
     search = "%{}%".format(search_text)
-    return db.query(models.Book).filter(models.Book.description.like(search)).all()
+    return db.query(models.Book).filter(models.Book.synopsis.like(search)).all()
 
 # 저자로 검색하기
 def search_by_author(db:Session, search_text: str):
     search = "%{}%".format(search_text)
     return db.query(models.Author).filter(models.Author.name.like(search)).all()
+
+# 인기있는 카테고리
+def popular_genre(db:Session):
+    book_genre = db.query(models.BookGenre.genre_id).all()
+    count = Counter(book_genre).most_common(5)
+    response = list()
+    for i in count:
+        idx = 0
+        genre = get_genre(db, genre_id=i[0][0])
+        books = get_items_by_genre(db, genre_id=genre.id)
+        book_info = dict()
+        book_list = list()
+        for book in books:
+            if idx == 12:
+                break
+            book_list.append(book.book)
+            idx += 1
+        book_info["genre_id"] = genre.id
+        book_info["genre_name"] = genre.name
+        book_info["books"] = book_list
+        response.append(book_info)
+    return response
+
+def popular_author(db:Session):
+    book_author = db.query(models.BookAuthor.author_id).all()
+    count = Counter(book_author).most_common(5)
+    response = list()
+    for i in count:
+        idx = 0
+        author = get_author(db, author_id=i[0][0])
+        books = get_items_by_author(db, author_id=author.id)
+        book_info = dict()
+        book_list = list()
+        for book in books:
+            if idx == 12:
+                break
+            book_list.append(book.book)
+            idx += 1
+        book_info["author_id"] = author.id
+        book_info["author_name"] = author.name
+        book_info["books"] = book_list
+        response.append(book_info)
+    return response
 
 
 def create_user_item_rating(db: Session, user_id: str, book_id: str, rating: int):
@@ -109,11 +178,6 @@ def modify_user_item_rating(db: Session, user_id: str, book_id: str, rating: int
     rating_info.rating = rating
     db.commit()
     return rating_info
-    
-
-
-def get_item_by_genre(db:Session, genre_id: int):
-    return db.query(models.Genre).filter(models.Genre.id == genre_id).first().books
 
 
 def current_time() -> datetime:
@@ -138,6 +202,7 @@ def create_book_loan(db: Session, user_id: str, book_id: str):
     db.add(db_loan)
     db.commit()
     db.refresh(db_loan)
+    return db_loan
 
 
 def get_loan_info(db: Session, user_id: str, book_id: str):
@@ -149,7 +214,7 @@ def get_loan_info(db: Session, user_id: str, book_id: str):
             models.Loan.is_return==False
             )).first()
     
-    return loan_info
+    return loan_info 
 
 
 def return_book(db: Session, user_id: str, book_id: str):
@@ -159,6 +224,7 @@ def return_book(db: Session, user_id: str, book_id: str):
     loan_info.return_at = current_time()
 
     db.commit()
+    return loan_info
 
 
 def get_loan_of_user(db: Session, user_id: str):
@@ -168,3 +234,4 @@ def get_loan_of_user(db: Session, user_id: str):
 
 def get_inference_of_user(db: Session, user_id: str):
     return db.query(models.Inference).filter(models.Inference.user==user_id).all()
+
