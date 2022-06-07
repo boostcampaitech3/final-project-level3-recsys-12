@@ -52,6 +52,12 @@
 [![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
 [![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
 
+## 서비스 아키텍쳐
+---
+<p align="center">
+<img src="https://user-images.githubusercontent.com/57610590/172322413-6eb0922e-54ec-411e-87e8-492f552bbf60.png" width="500"/>
+</p>
+
 ## 🎨 Gallary
 ### 전자도서관 MainPage
 ---
