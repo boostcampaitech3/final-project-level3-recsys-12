@@ -54,7 +54,7 @@ class TrainDataset():
         
         # load data
         self.base_dir = base_dir
-        self.raw_data = pd.read_csv(self.base_dir + 'Rating.tsv', sep='\t')
+        self.raw_data = pd.read_csv(self.base_dir + 'Rating.tsv', sep='\t', low_memory=False)
         self.data = preprocessing(self.raw_data)
         
         # filtering data

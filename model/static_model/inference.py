@@ -15,7 +15,7 @@ device = 'cuda'
 model_list = os.listdir('output')
 model_path = f'output/{model_list[-1]}'
 
-data_path = '../../data/ver2/infrence_data.npz'
+data_path = 'infer/infrence_data.npz'
 with open('infer/user_encoder.pkl', 'rb') as f:
     user_encoder = pickle.load(f)
 with open('infer/item_encoder.pkl', 'rb') as f:
@@ -79,7 +79,7 @@ def full_inference(k):
 inference_df = full_inference(k=10)
 inference_df = inference_df.sort_values(['user', 'score'], ascending=[True, False])
 
-if not os.path.exists('result/'):
-            os.mkdir('result')
+if not os.path.exists('../result/'):
+            os.mkdir('../result')
             
-inference_df.to_csv('result/full_inference_output.csv', index=False)
+inference_df.to_csv('../result/full_inference_output.csv', index=False)

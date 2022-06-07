@@ -11,10 +11,11 @@ import torch
 import pandas as pd
 import numpy as np
 
+from sklearn.preprocessing import MinMaxScaler
 ##############################ARGS##################################
 args = {
     ######data#######
-    'min_user_cnt' : 10,
+    'min_user_cnt' : 5,
     'min_item_cnt' : 0,
     'n_heldout' : 1000,
     'target_prop' : 0.2,
@@ -29,7 +30,7 @@ args = {
     'dropout_ratio' : 0.3,
     
     #####optimizer####
-    'lr' : 1e-4,
+    'lr' : 3e-4,
     'wd' : 0.00,
     
     ######trainer#####
@@ -39,7 +40,7 @@ args = {
     'de_epochs' : 1, #1
     'beta' : None,
     'gamma' : 0.005, #0.005
-    'early_stop': 10,
+    'early_stop': 3,
 
     'not_alter' : False,
     'ndcg_k' : 10,
@@ -180,9 +181,11 @@ def inference(trainer, data, k):
     return inference_df
 
 inference_df = inference(trainer, data, k=10)
+# scaler = MinMaxScaler(feature_range=(0,5))
+# inference_df['score'] = scaler.fit_transform(inference_df['score'])
 inference_df = inference_df.sort_values(['user', 'score'], ascending=[True, False])
 
-if not os.path.exists('result/'):
-            os.mkdir('result')
+if not os.path.exists('../result/'):
+            os.mkdir('../result')
             
-inference_df.to_csv('result/output.csv', index=False)
+#inference_df.to_csv('../result/output.csv', index=False)
