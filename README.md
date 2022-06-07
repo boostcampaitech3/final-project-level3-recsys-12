@@ -9,9 +9,39 @@
 
 
   # LibraVerse
-  > 공공 도서관을 위한 메타 버스 전자 도서관
+  > 공공 도서관을 위한 추천 시스템이 적용된 메타 버스 전자 도서관
 </div>
 
+## 프로젝트 개요
+
+* 목적
+    * 코로나로 인해 오프라인 도서관을 이용하기 힘들고, 책 추천 시스템이 있지만 통계 기반의 베스트셀러 위주의 책 추천이 이루어지고 있는 상황을 해결하여 시민들이 다시 도서관을 쉽게 접근할 수 있는 환경 구축
+
+* 주요 기능
+    * 개인 대출 이력에 기반한 도서 추천 시스템
+    * 전저도서관 구축
+    * 메타버스 구축 및 추천 결과 반영
+
+## Team
+
+### RecSys_12조 Hi_Rec
+
+#### 👨‍👩‍👦‍👦 Members  
+
+권용훈|김정훈|정승환|최종현|한광석|
+:-:|:-:|:-:|:-:|:-:
+<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>
+[Github](https://github.com/Wingseter)|[Github](https://github.com/jj150618)|[Github](https://github.com/barobaro9842)|[Github](https://github.com/Jonghyunchoi94)|[Github](https://github.com/c0natus)
+
+#### 🏆 Contribution  
+
+- [`권용훈`](https://github.com/Wingseter) &nbsp; 역할 • 역할
+- [`김정훈`](https://github.com/jj150618) &nbsp; 역할 • 역할
+- [`정승환`](https://github.com/barobaro9842) &nbsp; 역할 • 역할
+- [`최종현`](https://github.com/Jonghyunchoi94) &nbsp; 역할 • 역할
+- [`한광석`](https://github.com/c0natus) &nbsp; 역할 • 역할
+
+## 
 [![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
 [![PyTorch Verseion](https://img.shields.io/badge/Pytorch-1.7.1-orange)]()
 [![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
