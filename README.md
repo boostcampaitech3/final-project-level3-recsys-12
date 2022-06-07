@@ -1,14 +1,64 @@
-<img src="https://user-images.githubusercontent.com/57610590/172305396-0dfddf20-b132-4f2c-b5d2-7400abeae0e7.png"/>
+<p align="center">
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c6a20266-f362-4c9e-b723-d34bd5e92f99/TEST.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220607%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220607T064849Z&X-Amz-Expires=86400&X-Amz-Signature=b176e9d6e47c597a66f0f62d4e26b2eeef670c2fb86bb4acea912661e67cbdfe&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22TEST.png%22&x-id=GetObject" alt="teamlogo" width="700"/>
+</p>
+<br>
+<br>
 
-<img src="https://user-images.githubusercontent.com/57610590/172306125-df20c616-c222-477b-bd50-3867c30673dd.png" alt="drawing" width="200"/> # LibraVerse
+<div>
+  <img src="https://user-images.githubusercontent.com/57610590/172306125-df20c616-c222-477b-bd50-3867c30673dd.png" alt="drawing" align="right" width="250"/> 
 
-# LibraVerse
-> GFM  Markdown and WYSIWYG Editor - Productive and Extensible
 
-[![github release version](https://img.shields.io/github/v/release/nhn/tui.editor.svg?include_prereleases)](https://github.com/nhn/tui.editor/releases/latest) [![npm version](https://img.shields.io/npm/v/@toast-ui/editor.svg)](https://www.npmjs.com/package/@toast-ui/editor) [![license](https://img.shields.io/github/license/nhn/tui.editor.svg)](https://github.com/nhn/tui.editor/blob/master/LICENSE) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/nhn/tui.editor/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) [![code with hearth by NHN Cloud](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-NHN_Cloud-ff1414.svg)](https://github.com/nhn)
+  # LibraVerse
+  > 공공 도서관을 위한 메타 버스 전자 도서관
+</div>
 
-<img src="https://user-images.githubusercontent.com/37766175/121809054-446bac80-cc96-11eb-9139-08c6d9ad2d88.png" />
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![PyTorch Verseion](https://img.shields.io/badge/Pytorch-1.7.1-orange)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
 
+## 🎨 Gallary
+### 전자도서관 MainPage
+---
+<p align="center">
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2ea2b6fb-684b-4f57-9dae-91613ca63ae6/%EA%B7%B8%EB%A6%BC3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220607%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220607T071117Z&X-Amz-Expires=86400&X-Amz-Signature=5a90b4b1083a8030b7a73415bc23b44ba878a472473205dcdb4366e3854bd00c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B7%25B8%25EB%25A6%25BC3.png%22&x-id=GetObject" width="500"/>
+</p>
+<br>
+<br>
+
+### 전자도서관 도서 추천
+---
+<p align="center">
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/72d114d6-1d8d-466b-92c8-29f52c187f52/%EA%B7%B8%EB%A6%BC2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220607%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220607T071051Z&X-Amz-Expires=86400&X-Amz-Signature=064655dd51b8c26c6c855c42523202fcb42fa53e0a1785d36f8de197d70ee79a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B7%25B8%25EB%25A6%25BC2.png%22&x-id=GetObject" width="500" />
+</p>
+
+<br>
+<br>
+
+### 메타버스 MainPage
+---
+<p align="center">
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/af85766f-236c-405f-bfdd-4422183881a7/%EA%B7%B8%EB%A6%BC5.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220607%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220607T071133Z&X-Amz-Expires=86400&X-Amz-Signature=250e877555c6c67188f3b4d9894508b91b970e556fa7b4f3d14003ac2f00736a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B7%25B8%25EB%25A6%25BC5.png%22&x-id=GetObject" width="500"/>
+</p>
+
+<br>
+<br>
+
+### 메타버스 공간
+---
+<p align="center">
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1f0ef8c0-9bd4-415f-9f58-8cb7e5be8078/%EA%B7%B8%EB%A6%BC4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220607%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220607T071202Z&X-Amz-Expires=86400&X-Amz-Signature=e42866aa436d3ad09d0851bb687513a0dc942058c1d2659b81d9c9339f733583&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B7%25B8%25EB%25A6%25BC4.png%22&x-id=GetObject" width="500"/>
+</p>
+
+<br>
+<br>
+  
+</p>
 
 ## 🚩 Table of Contents
 
@@ -151,65 +201,48 @@ You can see your code reflected as soon as you save the code by running a server
 $ npm run serve editor
 ```
 
+#### Run webpack-dev-server
+If testing of legacy browsers is required, the development server can still be run using a [webpack](https://webpack.js.org/).
 
+``` sh
+$ npm run serve:ie editor
+```
+
+#### Run test
+
+``` sh
+$ npm test editor
+```
+
+### Pull Request
+
+Before uploading your PR, run test one last time to check if there are any errors. If it has no errors, commit and then push it!
+
+For more information on PR's steps, please see links in the Contributing section.
+
+## 💬 Contributing
+
+* [Code of Conduct](https://github.com/nhn/tui.editor/blob/master/CODE_OF_CONDUCT.md)
+* [Contributing Guideline](https://github.com/nhn/tui.editor/blob/master/CONTRIBUTING.md)
+* [Commit Convention](https://github.com/nhn/tui.editor/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md)
+* [Issue Guidelines](https://github.com/nhn/tui.editor/tree/master/.github/ISSUE_TEMPLATE)
+
+
+## 🍞 TOAST UI Family
+
+- [TOAST UI Calendar](https://github.com/nhn/tui.calendar)
+- [TOAST UI Chart](https://github.com/nhn/tui.chart)
+- [TOAST UI Grid](https://github.com/nhn/tui.grid)
+- [TOAST UI Image Editor](https://github.com/nhn/tui.image-editor)
+- [TOAST UI Components](https://github.com/nhn)
+
+
+## 🚀 Used By
+
+* [NHN Dooray! - Collaboration Service (Project, Messenger, Mail, Calendar, Drive, Wiki, Contacts)](https://dooray.com)
+* [UNOTES - Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ryanmcalister.Unotes)
 
 
 ## 📜 License
 
 This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [NHN Cloud](https://github.com/nhn).
-
-
-# Libraverse!
-
-- 공공 도서관을 위한 메타버스 & 웹 도서 추천 시스템
-
-## 1.프로젝트 개요
-
-* 목적
-    * 코로나로 인해 오프라인 도서관을 이용하기 힘들고, 책 추천 시스템이 있지만 통계 기반의 베스트셀러 위주의 책 추천이 이루어지고 있는 상황을 해결하여 시민들이 다시 도서관을 쉽게 접근할 수 있는 환경 구축
-
-* 주요 기능
-    * 개인 대출 이력에 기반한 도서 추천 시스템
-    * 전저도서관 구축
-    * 메타버스 구축 및 추천 결과 반영
-
-## 2.Team
-
-### RecSys_12조 Hi_Rec
-
-#### 👨‍👩‍👦‍👦 Members  
-
-권용훈|김정훈|정승환|최종현|한광석|
-:-:|:-:|:-:|:-:|:-:
-<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>
-[Github](https://github.com/Wingseter)|[Github](https://github.com/jj150618)|[Github](https://github.com/barobaro9842)|[Github](https://github.com/Jonghyunchoi94)|[Github](https://github.com/c0natus)
-
-#### 🏆 Contribution  
-
-- [`권용훈`](https://github.com/Wingseter) &nbsp; 역할 • 역할
-- [`김정훈`](https://github.com/jj150618) &nbsp; 역할 • 역할
-- [`정승환`](https://github.com/barobaro9842) &nbsp; 역할 • 역할
-- [`최종현`](https://github.com/Jonghyunchoi94) &nbsp; 역할 • 역할
-- [`한광석`](https://github.com/c0natus) &nbsp; 역할 • 역할
-
-## 3.Tech Stack
-<div>
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
-<img src="https://img.shields.io/badge/Pytorch-EE4C2C?style=for-the-badge&logo=Pytorch&logoColor=white">
-<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
-<img src="https://img.shields.io/badge/unrealengine-0E1128?style=for-the-badge&logo=unrealengine&logoColor=white"> 
-<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white">
-/<div>
-   
-## 4. Dataset
-https://nijianmo.github.io/amazon/index.html
-   
-## 5. Service Architecture
-<img src="https://user-images.githubusercontent.com/57610590/172316403-8c10f61e-e3fc-4bb3-96b1-d2bd5936b4b2.png"/>
-   
-## 6. Web
-<img src="https://user-images.githubusercontent.com/57610590/172314413-4cb9690a-7cd3-4cd6-ba45-9b3ca2f06225.png"/>
-
-## 7. Metaverse
-<img src="https://user-images.githubusercontent.com/57610590/172314340-0306095b-9556-4457-ac57-4ed20a5f9954.png"/> 
-   
