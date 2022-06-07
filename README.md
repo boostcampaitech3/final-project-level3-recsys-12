@@ -41,7 +41,7 @@
 - [`최종현`](https://github.com/Jonghyunchoi94) &nbsp; 역할 • 역할
 - [`한광석`](https://github.com/c0natus) &nbsp; 역할 • 역할
 
-## 
+## 기술 스택
 [![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
 [![PyTorch Verseion](https://img.shields.io/badge/Pytorch-1.7.1-orange)]()
 [![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
