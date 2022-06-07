@@ -55,7 +55,7 @@
 ## 서비스 아키텍쳐
 ---
 <p align="center">
-<img src="https://user-images.githubusercontent.com/57610590/172322413-6eb0922e-54ec-411e-87e8-492f552bbf60.png" width="500"/>
+<img src="https://user-images.githubusercontent.com/57610590/172322413-6eb0922e-54ec-411e-87e8-492f552bbf60.png"/>
 </p>
 
 ## 🎨 Gallary
