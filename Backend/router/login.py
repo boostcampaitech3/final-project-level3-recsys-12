@@ -107,7 +107,7 @@ async def login(
                 'fail_message': '로그인에 실패 하셨습니다.',
                 'login_required': True,
             }
-            return templates.TemplateResponse(os.path.join('html', 'others', 'account_fail.html'), context=context)
+            return templates.TemplateResponse(os.path.join('user', 'account_fail.html'), context=context)
         else:
             response = RedirectResponse(url="http://118.67.131.88:30001/")
             response.set_cookie(key="access_token", value=access_token, httponly=True)

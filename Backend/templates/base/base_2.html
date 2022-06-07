@@ -1,0 +1,14 @@
+{% extends 'base/head.html' %}
+
+{% block body %}
+<body class="left-sidebar">
+    {% include 'base/header.html' %}
+
+    {% block main_content %}
+    {% endblock main_content %}
+
+    {% include 'base/footer.html' %}
+
+    {% include 'base/js.html' %}
+</body>
+{% endblock body %}

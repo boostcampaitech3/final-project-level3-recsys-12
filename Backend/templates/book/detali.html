@@ -1,0 +1,146 @@
+{% extends 'base/base_1.html' %}
+
+{% block main_content %}
+<div class="page-header border-bottom">
+    <div class="container">
+        <div class="d-md-flex justify-content-between align-items-center py-4">
+            <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">상세 정보</h1>
+            <nav class="woocommerce-breadcrumb font-size-2">
+                <a href="/" class="h-primary">Home</a>
+                <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>
+                <a href="/books" class="h-primary">자료</a>
+                <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>상세 자료
+            </nav>
+        </div>
+    </div>
+</div>
+<div id="primary" class="content-area">
+    <main id="main" class="site-main ">
+        <div class="product">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 woocommerce-product-gallery woocommerce-product-gallery--with-images images">
+                        <figure class="woocommerce-product-gallery__wrapper pt-8 mb-0">
+                            <div class="js-slick-carousel u-slick">
+                                <div class="js-slide">
+                                    <img src="{{book.image_URL}}" alt="Image Description" class="mx-auto img-fluid">
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="col-md-7 pl-0 summary entry-summary border-left">
+                        <div class="space-top-2 px-4 px-xl-7 border-bottom pb-5">
+                            <h1 class="product_title entry-title font-size-7 mb-3">{{book.title}}</h1>
+                            <div class="font-size-2 mb-4">
+                                {% if login_required %}
+                                <span class="">
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                </span>
+                                <span class="ml-3">(0)</span>
+                                {% else %}
+                                    {% if rating == 0 %}
+                                    <span class="">
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                    </span>
+                                    <span class="ml-3">(0)</span>
+                                    {% else %}
+                                    {% for _ in range(rating) %}
+                                    <span class="text-yellow-darker">
+                                        <span class="fas fa-star"></span>
+                                    </span>
+                                    {% endfor %}
+                                    {% for _ in range(5-rating) %}
+                                    <span class="">
+                                        <span class="fas fa-star"></span>
+                                    </span>
+                                    {% endfor %}
+                                    <span class="ml-3">({{rating}})</span>
+                                    {% endif %}
+                                    
+                                {% endif %}
+                             
+                                
+                                <span class="ml-3 font-weight-medium">By (author)</span>
+                                <span class="ml-2 text-gray-600">{{author.name}}</span>
+                       
+                
+                            </div>
+
+                            <div class="woocommerce-product-details__short-description font-size-2 mb-5">
+                                <p class="">{{book.synopsis}}</p>
+                            </div>
+                        </div>
+                        <div class="px-4 px-xl-7 py-5 d-flex align-items-center">
+                            {% if rating == 0 %}
+                                <form action="{{book.id}}/ratingcreate" class="quantity mb-4 mb-md-0 d-flex align-items-center" method="post">
+                                    <div class="border px-3 width-120">
+                                        <div class="js-quantity">
+                                            <div class="d-flex align-items-center">
+                                                <label class="screen-reader-text sr-only">Quantity</label>
+                                                <a class="js-minus text-dark" href="javascript:;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="1px">
+                                                        <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M-0.000,-0.000 L10.000,-0.000 L10.000,1.000 L-0.000,1.000 L-0.000,-0.000 Z" />
+                                                    </svg>
+                                                </a>
+                                                <input type="number" class="input-text qty text js-result form-control text-center border-0" step="1" min="1" max="5" name="rating" value="1" title="Qty">
+                                                <a class="js-plus text-dark" href="javascript:;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                                                        <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M10.000,5.000 L6.000,5.000 L6.000,10.000 L5.000,10.000 L5.000,5.000 L-0.000,5.000 L-0.000,4.000 L5.000,4.000 L5.000,-0.000 L6.000,-0.000 L6.000,4.000 L10.000,4.000 L10.000,5.000 Z" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button  type="submit" name="" value="" class="btn btn-primary border-0 rounded-0 p-3 min-width-200 ml-md-4 single_add_to_cart_button button alt">평가</button>
+                                </form>
+                            {% else %}
+                                <form action="{{book.id}}/ratingmodify" class="quantity mb-4 mb-md-0 d-flex align-items-center" method="post" enctype="multipart/form-data">
+                                    <div class="border px-3 width-120">
+                                        <div class="js-quantity">
+                                            <div class="d-flex align-items-center">
+                                                <label class="screen-reader-text sr-only">Quantity</label>
+                                                <a class="js-minus text-dark" href="javascript:;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="1px">
+                                                        <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M-0.000,-0.000 L10.000,-0.000 L10.000,1.000 L-0.000,1.000 L-0.000,-0.000 Z" />
+                                                    </svg>
+                                                </a>
+                                                <input type="number" class="input-text qty text js-result form-control text-center border-0" step="1" min="1" max="5" name="rating" value="1" title="Qty">
+                                                <a class="js-plus text-dark" href="javascript:;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                                                        <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M10.000,5.000 L6.000,5.000 L6.000,10.000 L5.000,10.000 L5.000,5.000 L-0.000,5.000 L-0.000,4.000 L5.000,4.000 L5.000,-0.000 L6.000,-0.000 L6.000,4.000 L10.000,4.000 L10.000,5.000 Z" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button  type="submit" name="" value="" class="btn btn-primary border-0 rounded-0 p-3 min-width-200 ml-md-4 single_add_to_cart_button button alt">평가</button>
+                                </form>
+                            {% endif %}
+
+                            {% if loan_status == True %}
+                                <form action="{{book.id}}/loan" method="get">
+                                    <button type="submit" name="add-to-cart" value="7145" class="btn btn-dark border-0 rounded-0 p-3 min-width-250 ml-md-4 single_add_to_cart_button button alt">대출</button>
+                                </form>
+                            {% else %}
+                                <form action="{{book.id}}/return" method="get">
+                                    <button type="submit" name="add-to-cart" value="7145" class="btn btn-dark border-0 rounded-0 p-3 min-width-250 ml-md-4 single_add_to_cart_button button alt">반납</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+{% endblock main_content %}
+

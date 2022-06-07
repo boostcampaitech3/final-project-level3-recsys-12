@@ -48,7 +48,6 @@ async def main(request: Request,  db: Session = Depends(get_db), current_user = 
             "username": username,
             "recent_items": recent_items,
         }
-       
     else:
         # token이 있고, 기간이 만료가 안 되었을 때
         login_required = False
@@ -66,5 +65,5 @@ async def main(request: Request,  db: Session = Depends(get_db), current_user = 
             "rec_books": rec_books,
         }
 
-    response = templates.TemplateResponse("html/home/index.html" , context)
+    response = templates.TemplateResponse(os.path.join("main.html") , context)
     return response

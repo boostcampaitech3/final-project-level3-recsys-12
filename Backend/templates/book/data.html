@@ -1,0 +1,417 @@
+{% extends 'base/base_2.html' %}
+
+{% block main_content %}
+<body class="left-sidebar">
+    {% if login_required == True %}
+        <div class="page-header border-bottom mb-8">
+            <div class="container">
+                <div class="d-md-flex justify-content-between align-items-center py-4">
+                    <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">자료</h1>
+                    <nav class="woocommerce-breadcrumb font-size-2">
+                        <a href="/" class="h-primary">Home</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="site-content space-bottom-3" id="content">
+            <div class="container">
+                <div class="row">
+                    <div id="primary" class="content-area order-2">
+                        <div class="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
+                            <div class="shop-control-bar__left mb-4 m-lg-0">
+                                <p class="woocommerce-result-count m-0">Showing 1–12 of 126 results</p>
+                            </div>
+                            <div class="shop-control-bar__right d-md-flex align-items-center">
+                                <form class="woocommerce-ordering mb-4 m-md-0" method="get">
+                                    <!-- Select -->
+                                    <select class="js-select selectpicker dropdown-select orderby" name="orderby"
+                                    data-style="border-bottom shadow-none outline-none py-2">
+                                        <option value="popularity">Sort by popularity</option>
+                                        <option value="default" selected="selected">Default sorting</option>
+                                        <option value="date">Sort by newness</option>
+                                        <option value="price">Sort by price: low to high</option>
+                                        <option value="price-desc">Sort by price: high to low</option>
+                                    </select>
+                                    <!-- End Select -->
+                                </form>
+
+                                <form class="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block" method="get">
+                                    <!-- Select -->
+                                    <select class="js-select selectpicker dropdown-select orderby" name="orderby"
+                                    data-style="border-bottom shadow-none outline-none py-2"
+                                    data-width="fit">
+                                        <option value="show10">Show 10</option>
+                                        <option value="show15">Show 15</option>
+                                        <option value="show20" selected="selected">Show 20</option>
+                                        <option value="show25">Show 25</option>
+                                        <option value="show30">Show 30</option>
+                                    </select>
+                                    <!-- End Select -->
+                                </form>
+
+                                <ul class="nav nav-tab ml-lg-4 justify-content-center justify-content-md-start ml-md-auto" id="pills-tab" role="tablist">
+                                    <li class="nav-item border">
+                                        <a class="nav-link p-0 height-38 width-38 justify-content-center d-flex align-items-center active" id="pills-one-example1-tab" data-toggle="pill" href="#pills-one-example1" role="tab" aria-controls="pills-one-example1" aria-selected="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px">
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,0.000 L3.000,0.000 L3.000,3.000 L-0.000,3.000 L-0.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,0.000 L10.000,0.000 L10.000,3.000 L7.000,3.000 L7.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M14.000,0.000 L17.000,0.000 L17.000,3.000 L14.000,3.000 L14.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,7.000 L3.000,7.000 L3.000,10.000 L-0.000,10.000 L-0.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,7.000 L10.000,7.000 L10.000,10.000 L7.000,10.000 L7.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M14.000,7.000 L17.000,7.000 L17.000,10.000 L14.000,10.000 L14.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,14.000 L3.000,14.000 L3.000,17.000 L-0.000,17.000 L-0.000,14.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,14.000 L10.000,14.000 L10.000,17.000 L7.000,17.000 L7.000,14.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M14.000,14.000 L17.000,14.000 L17.000,17.000 L14.000,17.000 L14.000,14.000 Z" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item border">
+                                        <a class="nav-link p-0 height-38 width-38 justify-content-center d-flex align-items-center" id="pills-two-example1-tab" data-toggle="pill" href="#pills-two-example1" role="tab" aria-controls="pills-two-example1" aria-selected="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="17px">
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,0.000 L3.000,0.000 L3.000,3.000 L-0.000,3.000 L-0.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,0.000 L23.000,0.000 L23.000,3.000 L7.000,3.000 L7.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,7.000 L3.000,7.000 L3.000,10.000 L-0.000,10.000 L-0.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,7.000 L23.000,7.000 L23.000,10.000 L7.000,10.000 L7.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,14.000 L3.000,14.000 L3.000,17.000 L-0.000,17.000 L-0.000,14.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,14.000 L23.000,14.000 L23.000,17.000 L7.000,17.000 L7.000,14.000 Z" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        {% include 'book/data_tap.html' %}
+
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination__custom justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble">
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item active" aria-current="page"><a class="page-link" href="#">3</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div id="secondary" class="sidebar widget-area order-1" role="complementary">
+                        <div id="widgetAccordion">
+                            <div id="woocommerce_product_categories-2" class="widget p-4d875 border woocommerce widget_product_categories">
+                                <div id="widgetHeadingOne" class="widget-head">
+                                    <a class="d-flex align-items-center justify-content-between text-dark" href="#"
+                                        data-toggle="collapse"
+                                        data-target="#widgetCollapseOne"
+                                        aria-expanded="true"
+                                        aria-controls="widgetCollapseOne">
+
+                                        <h3 class="widget-title mb-0 font-weight-medium font-size-3">Categories</h3>
+
+                                        <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                        </svg>
+
+                                        <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div id="widgetCollapseOne" class="mt-3 widget-content collapse show"
+                                    aria-labelledby="widgetHeadingOne"
+                                    data-parent="#widgetAccordion">
+                                    <ul class="product-categories">
+                                        {% for genre in popular_genre %}
+                                            <li class="cat-item cat-item-9 cat-parent">
+                                                <a href="/books/populargenre/{{genre.genre_id}}">{{genre.genre_name}}</a>                           
+                                            </li>
+                                        {% endfor %}
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="Authors" class="widget widget_search widget_author p-4d875 border">
+                                <div id="widgetHeading21" class="widget-head">
+                                    <a class="d-flex align-items-center justify-content-between text-dark" href="#"
+                                        data-toggle="collapse"
+                                        data-target="#widgetCollapse21"
+                                        aria-expanded="true"
+                                        aria-controls="widgetCollapse21">
+
+                                        <h3 class="widget-title mb-0 font-weight-medium font-size-3">Author</h3>
+
+                                        <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                        </svg>
+
+                                        <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div id="widgetCollapse21" class="mt-4 widget-content collapse show"
+                                    aria-labelledby="widgetHeading21"
+                                    data-parent="#widgetAccordion">
+                                    <form class="form-inline my-2 overflow-hidden">
+                                        <div class="input-group flex-nowrap w-100">
+                                            <div class="input-group-prepend">
+                                                <i class="glph-icon flaticon-loupe py-2d75 bg-white-100 border-white-100 text-dark pl-3 pr-0 rounded-0"></i>
+                                            </div>
+                                            <input class="form-control bg-white-100 py-2d75 height-4 border-white-100 rounded-0" type="search" placeholder="Search" aria-label="Search">
+                                        </div>
+                                        <button class="btn btn-outline-success my-2 my-sm-0 sr-only" type="submit">Search</button>
+                                    </form>
+                                    <ul class="product-categories">
+                                        {% for author in popular_author %}
+                                            <li class="cat-item cat-item-9 cat-parent">
+                                                <a href="/books/popularauthor/{{author.author_id}}">{{author.author_name}}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="page-header border-bottom mb-8">
+            <div class="container">
+                <div class="d-md-flex justify-content-between align-items-center py-4">
+                    <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">자료</h1>
+                    <nav class="woocommerce-breadcrumb font-size-2">
+                        <a href="/" class="h-primary">Home</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="site-content space-bottom-3" id="content">
+            <div class="container">
+                <div class="row">
+                    <div id="primary" class="content-area order-2">
+                        <div class="position-relative mb-6">
+                            <header class="mb-5 d-md-flex justify-content-between align-items-center">
+                                <h2 class="font-size-26 mb-3 mb-md-0">Recommended Books</h2>
+                            </header>
+
+                            <div class="js-slick-carousel products no-gutters border-top border-left border-right position-static"
+                                data-arrows-classes="position-absolute right-0 top-0 mt-2 arrow-cursor"
+                                data-arrow-left-classes="flaticon-back mr-5"
+                                data-arrow-right-classes="flaticon-next"
+                                data-slides-show="4"
+                                data-responsive='[{
+                                "breakpoint": 1500,
+                                "settings": {
+                                    "slidesToShow": 3
+                                }
+                                },{
+                                "breakpoint": 992,
+                                "settings": {
+                                    "slidesToShow": 2
+                                }
+                                }, {
+                                "breakpoint": 768,
+                                "settings": {
+                                    "slidesToShow": 1
+                                }
+                                }, {
+                                "breakpoint": 554,
+                                "settings": {
+                                    "slidesToShow": 1
+                                }
+                                }]'>
+                                {% for rec in rec_books %}
+                                    <div class="product">
+                                        <div class="product__inner overflow-hidden p-3 p-md-4">
+                                            <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
+                                                <div class="woocommerce-loop-product__thumbnail">
+                                                    <a href="/books/{{rec.id}}" class="d-block"><img src="{{rec.image_URL}}" class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description"></a>
+                                                </div>
+                                                <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
+                                                    <h2 class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark"><a href="/books/{{rec.id}}">{{rec.title}}</a></h2>
+                                                    <div class="font-size-2  mb-1 text-truncate"><a href="../others/authors-single.html" class="text-gray-700">{{rec.publisher}}</a></div>
+                    
+                                                </div>
+                                                <div class="product__hover d-flex align-items-center">
+                                                    <!-- 사진 올리면 정보 보이기 -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                    
+                            </div>
+                        </div>
+
+                        <div class="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
+                            <div class="shop-control-bar__left mb-4 m-lg-0">
+                                <p class="woocommerce-result-count m-0">Showing 1–12 of 126 results</p>
+                            </div>
+                            <div class="shop-control-bar__right d-md-flex align-items-center">
+                                <form class="woocommerce-ordering mb-4 m-md-0" method="get">
+                                    <!-- Select -->
+                                    <select class="js-select selectpicker dropdown-select orderby" name="orderby"
+                                    data-style="border-bottom shadow-none outline-none py-2">
+                                        <option value="popularity">Sort by popularity</option>
+                                        <option value="default" selected="selected">Default sorting</option>
+                                        <option value="date">Sort by newness</option>
+                                        <option value="price">Sort by price: low to high</option>
+                                        <option value="price-desc">Sort by price: high to low</option>
+                                    </select>
+                                    <!-- End Select -->
+                                </form>
+
+                                <form class="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block" method="get">
+                                    <!-- Select -->
+                                    <select class="js-select selectpicker dropdown-select orderby" name="orderby"
+                                    data-style="border-bottom shadow-none outline-none py-2"
+                                    data-width="fit">
+                                        <option value="show10">Show 10</option>
+                                        <option value="show15">Show 15</option>
+                                        <option value="show20" selected="selected">Show 20</option>
+                                        <option value="show25">Show 25</option>
+                                        <option value="show30">Show 30</option>
+                                    </select>
+                                    <!-- End Select -->
+                                </form>
+
+                                <ul class="nav nav-tab ml-lg-4 justify-content-center justify-content-md-start ml-md-auto" id="pills-tab" role="tablist">
+                                    <li class="nav-item border">
+                                        <a class="nav-link p-0 height-38 width-38 justify-content-center d-flex align-items-center active" id="pills-one-example1-tab" data-toggle="pill" href="#pills-one-example1" role="tab" aria-controls="pills-one-example1" aria-selected="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px">
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,0.000 L3.000,0.000 L3.000,3.000 L-0.000,3.000 L-0.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,0.000 L10.000,0.000 L10.000,3.000 L7.000,3.000 L7.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M14.000,0.000 L17.000,0.000 L17.000,3.000 L14.000,3.000 L14.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,7.000 L3.000,7.000 L3.000,10.000 L-0.000,10.000 L-0.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,7.000 L10.000,7.000 L10.000,10.000 L7.000,10.000 L7.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M14.000,7.000 L17.000,7.000 L17.000,10.000 L14.000,10.000 L14.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,14.000 L3.000,14.000 L3.000,17.000 L-0.000,17.000 L-0.000,14.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,14.000 L10.000,14.000 L10.000,17.000 L7.000,17.000 L7.000,14.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M14.000,14.000 L17.000,14.000 L17.000,17.000 L14.000,17.000 L14.000,14.000 Z" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item border">
+                                        <a class="nav-link p-0 height-38 width-38 justify-content-center d-flex align-items-center" id="pills-two-example1-tab" data-toggle="pill" href="#pills-two-example1" role="tab" aria-controls="pills-two-example1" aria-selected="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="17px">
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,0.000 L3.000,0.000 L3.000,3.000 L-0.000,3.000 L-0.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,0.000 L23.000,0.000 L23.000,3.000 L7.000,3.000 L7.000,0.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,7.000 L3.000,7.000 L3.000,10.000 L-0.000,10.000 L-0.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,7.000 L23.000,7.000 L23.000,10.000 L7.000,10.000 L7.000,7.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M-0.000,14.000 L3.000,14.000 L3.000,17.000 L-0.000,17.000 L-0.000,14.000 Z" />
+                                                <path fill-rule="evenodd" fill="rgb(25, 17, 11)" d="M7.000,14.000 L23.000,14.000 L23.000,17.000 L7.000,17.000 L7.000,14.000 Z" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        {% include 'book/data_tap.html' %}
+
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination__custom justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble">
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="flex-shrink-0 flex-md-shrink-1 page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div id="secondary" class="sidebar widget-area order-1" role="complementary">
+                        <div id="widgetAccordion">
+                            <div id="woocommerce_product_categories-2" class="widget p-4d875 border woocommerce widget_product_categories">
+                                <div id="widgetHeadingOne" class="widget-head">
+                                    <a class="d-flex align-items-center justify-content-between text-dark" href="#"
+                                        data-toggle="collapse"
+                                        data-target="#widgetCollapseOne"
+                                        aria-expanded="true"
+                                        aria-controls="widgetCollapseOne">
+
+                                        <h3 class="widget-title mb-0 font-weight-medium font-size-3">Categories</h3>
+
+                                        <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                        </svg>
+
+                                        <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div id="widgetCollapseOne" class="mt-3 widget-content collapse show"
+                                    aria-labelledby="widgetHeadingOne"
+                                    data-parent="#widgetAccordion">
+                                    <ul class="product-categories">
+                                        {% for genre in popular_genre %}
+                                            <li class="cat-item cat-item-9 cat-parent">
+                                                <a href="/books/populargenre/{{genre.genre_id}}">{{genre.genre_name}}</a>                           
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="Authors" class="widget widget_search widget_author p-4d875 border">
+                                <div id="widgetHeading21" class="widget-head">
+                                    <a class="d-flex align-items-center justify-content-between text-dark" href="#"
+                                        data-toggle="collapse"
+                                        data-target="#widgetCollapse21"
+                                        aria-expanded="true"
+                                        aria-controls="widgetCollapse21">
+
+                                        <h3 class="widget-title mb-0 font-weight-medium font-size-3">Author</h3>
+
+                                        <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                        </svg>
+
+                                        <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                            <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div id="widgetCollapse21" class="mt-4 widget-content collapse show"
+                                    aria-labelledby="widgetHeading21"
+                                    data-parent="#widgetAccordion">
+                                    <form class="form-inline my-2 overflow-hidden">
+                                        <div class="input-group flex-nowrap w-100">
+                                            <div class="input-group-prepend">
+                                                <i class="glph-icon flaticon-loupe py-2d75 bg-white-100 border-white-100 text-dark pl-3 pr-0 rounded-0"></i>
+                                            </div>
+                                            <input class="form-control bg-white-100 py-2d75 height-4 border-white-100 rounded-0" type="search" placeholder="Search" aria-label="Search">
+                                        </div>
+                                        <button class="btn btn-outline-success my-2 my-sm-0 sr-only" type="submit">Search</button>
+                                    </form>
+                                    <ul class="product-categories">
+                                        {% for author in popular_author %}
+                                            <li class="cat-item cat-item-9 cat-parent">
+                                                <a href="/books/popularauthor/{{author.author_id}}">{{author.author_name}}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock main_content %}
