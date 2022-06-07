@@ -21,7 +21,7 @@ def search(request: Request, db: Session = Depends(get_db), text: str = ""):
         "search": search,
     }
 
-    return templates.TemplateResponse("html/shop/search_item.html", context)
+    return templates.TemplateResponse(os.path.join("book", "search_item.html"), context)
 
 
 @search_router.get("/author/", response_class=HTMLResponse)
@@ -33,4 +33,4 @@ def search(request: Request, db: Session = Depends(get_db), text: str = ""):
         "search": search,
     }
 
-    return templates.TemplateResponse("html/shop/search_author.html", context)
+    return templates.TemplateResponse(os.path.join("book", "search_author.html"), context)

@@ -19,7 +19,7 @@ def user_loan_info(request: Request, db: Session = Depends(get_db), current_user
     if current_user is False:
         context['login_required'] = True
         context['fail_message'] = '로그인이 필요합니다.'
-        return templates.TemplateResponse(os.path.join('html', 'others', 'account_fail.html'), context=context)
+        return templates.TemplateResponse(os.path.join('user', 'account_fail.html'), context=context)
     else:
         loan_books = get_loan_of_user(db, current_user.id)
         list_loaned_books = list()
@@ -46,6 +46,6 @@ def user_loan_info(request: Request, db: Session = Depends(get_db), current_user
         context['returned_info'] = sorted_retured_books
         context['all_loan_length'] = len(list_loaned_books) + len(list_returned_books)
         
-        response = templates.TemplateResponse(os.path.join('html', 'shop', 'cart.html'), context=context)
+        response = templates.TemplateResponse(os.path.join('user', 'loan_history.html'), context=context)
         response.set_cookie(key="previous_url", value="http://118.67.131.88:30001/loan_info/", httponly=True)
         return response

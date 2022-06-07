@@ -1,9 +1,9 @@
-from typing import List
+import os
+
 from fastapi import APIRouter, Form, Request, Depends
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
-from urllib3 import HTTPResponse
 from utils import templates, get_db, get_current_user
 
 from db import crud, models
@@ -12,7 +12,7 @@ book_router = APIRouter(prefix="/books")
 
 
 @book_router.get("/", response_class=HTMLResponse)
-def read_item(request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+async def read_item(request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     books = crud.all_items(db, skip=0, limit=12)
     popular_genre = crud.popular_genre(db)
     popular_author = crud.popular_author(db)
@@ -44,7 +44,7 @@ def read_item(request: Request, db: Session = Depends(get_db), current_user: mod
             "rec_books": rec_books,
         }
 
-    return templates.TemplateResponse("html/shop/v3.html", context)
+    return templates.TemplateResponse(os.path.join('book', 'data.html'), context)
 
 
 @book_router.get("/populargenre/{genre_id}", response_class=HTMLResponse)
@@ -89,7 +89,7 @@ def read_genre(request: Request, db: Session = Depends(get_db), current_user: mo
         }
 
     
-    return templates.TemplateResponse("html/shop/genre.html", context)
+    return templates.TemplateResponse(os.path.join('book', 'genre.html'), context)
 
 
 @book_router.get("/popularauthor/{author_id}", response_class=HTMLResponse)
@@ -133,7 +133,7 @@ def read_genre(request: Request, db: Session = Depends(get_db), current_user: mo
             "rec_books": rec_books,
         }
 
-    return templates.TemplateResponse("html/shop/author.html", context)
+    return templates.TemplateResponse(os.path.join('book', 'author.html'), context)
 
 
 
@@ -163,7 +163,7 @@ async def read_item(request: Request, db: Session = Depends(get_db), book_id: st
         "loan_status": loan_status,
         "rating": rating
         }
-        return templates.TemplateResponse("html/shop/single-product-v1.html", context)
+        return templates.TemplateResponse(os.path.join('book', 'detali.html'), context)
     else:
         loan_status = True
         context = {
@@ -175,7 +175,7 @@ async def read_item(request: Request, db: Session = Depends(get_db), book_id: st
         "loan_status": loan_status,
         "rating": 0,
         }
-        return templates.TemplateResponse("html/shop/single-product-v1.html", context)
+        return templates.TemplateResponse(os.path.join('book', 'detali.html'), context)
 
 
 @book_router.post("/{book_id}/ratingcreate", response_class=RedirectResponse)
@@ -191,7 +191,7 @@ async def rating(
     if current_user is False:
         context['login_required'] = True
         context['fail_message'] = '로그인이 필요합니다.'
-        return templates.TemplateResponse("html/others/account_fail.html", context)
+        return templates.TemplateResponse(os.path.join("user", "account_fail.html"), context)
     else:          
         crud.create_user_item_rating(db, user_id=current_user.id, book_id=book_id, rating=rating)
         response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")
@@ -220,7 +220,7 @@ def loan_book_func(request: Request, book_id: str, db: Session = Depends(get_db)
     if current_user is False:
         context['login_required'] = True
         context['fail_message'] = '로그인이 필요합니다.'
-        return templates.TemplateResponse("html/others/account_fail.html", context)
+        return templates.TemplateResponse("html/account_fail.html", context)
     else:          
         crud.create_book_loan(db, current_user.id, book_id)
         response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")

@@ -42,17 +42,28 @@ async def main(request: Request,  db: Session = Depends(get_db), current_user = 
         # token이 없거나, token이 있지만 기간이 만료되었을 때
         login_required = True
         username = None
+        context = {
+            "request": request,
+            "login_required": login_required,
+            "username": username,
+            "recent_items": recent_items,
+        }
     else:
         # token이 있고, 기간이 만료가 안 되었을 때
         login_required = False
         username = current_user.name
+        recommendation_items = crud.get_inference_of_user(db, user_id=current_user.id)
+        rec_books = list()
+        for item in recommendation_items:
+            rec_books.append(item.item_info)
 
-    context = {
-        "request": request,
-        "login_required": login_required,
-        "username": username,
-        "recent_items": recent_items,
-    }
+        context = {
+            "request": request,
+            "login_required": login_required,
+            "username": username,
+            "recent_items": recent_items,
+            "rec_books": rec_books,
+        }
 
-    response = templates.TemplateResponse("html/home/index.html" , context)
+    response = templates.TemplateResponse(os.path.join("main.html") , context)
     return response

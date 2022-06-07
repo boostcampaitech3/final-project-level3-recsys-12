@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text, Numeric
 from sqlalchemy.orm import relationship
 
-from .database import Base, engine
+from db.database import Base, engine
 
 
 
