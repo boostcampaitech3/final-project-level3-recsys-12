@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/57610590/172305396-0dfddf20-b132-4f2c-b5d2-7400abeae0e7.png"/>
 
-<img src="https://user-images.githubusercontent.com/57610590/172306125-df20c616-c222-477b-bd50-3867c30673dd.png" alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/57610590/172306125-df20c616-c222-477b-bd50-3867c30673dd.png" alt="drawing" width="200"/> # LibraVerse
 
 # LibraVerse
 > GFM  Markdown and WYSIWYG Editor - Productive and Extensible
@@ -196,3 +196,49 @@ For more information on PR's steps, please see links in the Contributing section
 ## 📜 License
 
 This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [NHN Cloud](https://github.com/nhn).
+
+
+# Libraverse!
+
+- 공공 도서관을 위한 메타버스 & 웹 도서 추천 시스템
+
+## 1.Project Abstract
+
+### 프로젝트 개요
+
+* 목적
+    * 코로나로 인해 오프라인 도서관을 이용하기 힘들고, 책 추천 시스템이 있지만 통계 기반의 베스트셀러 위주의 책 추천이 이루어지고 있는 상황을 해결하여 시민들이 다시 도서관을 쉽게 접근할 수 있는 환경 구축
+
+* 주요 기능
+    * 개인 대출 이력에 기반한 도서 추천 시스템
+    * 전저도서관 구축
+    * 메타버스 구축 및 추천 결과 반영
+
+### RecSys_12조 Hi_Rec
+
+
+#### 👨‍👩‍👦‍👦 Members  
+
+권용훈|김정훈|정승환|최종현|한광석|
+:-:|:-:|:-:|:-:|:-:
+<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>
+[Github]()|[Github]()|[Github]()|[Github]()|[Github]()
+
+#### 🏆 Contribution  
+
+- [`권용훈`]() &nbsp; 역할 • 역할
+- [`김정훈`]() &nbsp; 역할 • 역할
+- [`정승환`]() &nbsp; 역할 • 역할
+- [`최종현`]() &nbsp; 역할 • 역할
+- [`한광석`]() &nbsp; 역할 • 역할
+
+
+
+## 2.Tech Stack
+<div>
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/Pytorch-EE4C2C?style=for-the-badge&logo=Pytorch&logoColor=white">
+<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
+<img src="https://img.shields.io/badge/unrealengine-0E1128?style=for-the-badge&logo=unrealengine&logoColor=white"> 
+<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white">
+/<div>
