@@ -151,46 +151,7 @@ You can see your code reflected as soon as you save the code by running a server
 $ npm run serve editor
 ```
 
-#### Run webpack-dev-server
-If testing of legacy browsers is required, the development server can still be run using a [webpack](https://webpack.js.org/).
 
-``` sh
-$ npm run serve:ie editor
-```
-
-#### Run test
-
-``` sh
-$ npm test editor
-```
-
-### Pull Request
-
-Before uploading your PR, run test one last time to check if there are any errors. If it has no errors, commit and then push it!
-
-For more information on PR's steps, please see links in the Contributing section.
-
-## 💬 Contributing
-
-* [Code of Conduct](https://github.com/nhn/tui.editor/blob/master/CODE_OF_CONDUCT.md)
-* [Contributing Guideline](https://github.com/nhn/tui.editor/blob/master/CONTRIBUTING.md)
-* [Commit Convention](https://github.com/nhn/tui.editor/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md)
-* [Issue Guidelines](https://github.com/nhn/tui.editor/tree/master/.github/ISSUE_TEMPLATE)
-
-
-## 🍞 TOAST UI Family
-
-- [TOAST UI Calendar](https://github.com/nhn/tui.calendar)
-- [TOAST UI Chart](https://github.com/nhn/tui.chart)
-- [TOAST UI Grid](https://github.com/nhn/tui.grid)
-- [TOAST UI Image Editor](https://github.com/nhn/tui.image-editor)
-- [TOAST UI Components](https://github.com/nhn)
-
-
-## 🚀 Used By
-
-* [NHN Dooray! - Collaboration Service (Project, Messenger, Mail, Calendar, Drive, Wiki, Contacts)](https://dooray.com)
-* [UNOTES - Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ryanmcalister.Unotes)
 
 
 ## 📜 License
@@ -202,9 +163,7 @@ This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob
 
 - 공공 도서관을 위한 메타버스 & 웹 도서 추천 시스템
 
-## 1.Project Abstract
-
-### 프로젝트 개요
+## 1.프로젝트 개요
 
 * 목적
     * 코로나로 인해 오프라인 도서관을 이용하기 힘들고, 책 추천 시스템이 있지만 통계 기반의 베스트셀러 위주의 책 추천이 이루어지고 있는 상황을 해결하여 시민들이 다시 도서관을 쉽게 접근할 수 있는 환경 구축
@@ -214,27 +173,26 @@ This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob
     * 전저도서관 구축
     * 메타버스 구축 및 추천 결과 반영
 
-### RecSys_12조 Hi_Rec
+## 2.Team
 
+### RecSys_12조 Hi_Rec
 
 #### 👨‍👩‍👦‍👦 Members  
 
 권용훈|김정훈|정승환|최종현|한광석|
 :-:|:-:|:-:|:-:|:-:
 <img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>|<img src='' height=80 width=80px></img>
-[Github]()|[Github]()|[Github]()|[Github]()|[Github]()
+[Github](https://github.com/Wingseter)|[Github](https://github.com/jj150618)|[Github](https://github.com/barobaro9842)|[Github](https://github.com/Jonghyunchoi94)|[Github](https://github.com/c0natus)
 
 #### 🏆 Contribution  
 
-- [`권용훈`]() &nbsp; 역할 • 역할
-- [`김정훈`]() &nbsp; 역할 • 역할
-- [`정승환`]() &nbsp; 역할 • 역할
-- [`최종현`]() &nbsp; 역할 • 역할
-- [`한광석`]() &nbsp; 역할 • 역할
+- [`권용훈`](https://github.com/Wingseter) &nbsp; 역할 • 역할
+- [`김정훈`](https://github.com/jj150618) &nbsp; 역할 • 역할
+- [`정승환`](https://github.com/barobaro9842) &nbsp; 역할 • 역할
+- [`최종현`](https://github.com/Jonghyunchoi94) &nbsp; 역할 • 역할
+- [`한광석`](https://github.com/c0natus) &nbsp; 역할 • 역할
 
-
-
-## 2.Tech Stack
+## 3.Tech Stack
 <div>
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
 <img src="https://img.shields.io/badge/Pytorch-EE4C2C?style=for-the-badge&logo=Pytorch&logoColor=white">
@@ -242,3 +200,16 @@ This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob
 <img src="https://img.shields.io/badge/unrealengine-0E1128?style=for-the-badge&logo=unrealengine&logoColor=white"> 
 <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white">
 /<div>
+   
+## 4. Dataset
+https://nijianmo.github.io/amazon/index.html
+   
+## 5. Service Architecture
+<img src="https://user-images.githubusercontent.com/57610590/172316403-8c10f61e-e3fc-4bb3-96b1-d2bd5936b4b2.png"/>
+   
+## 6. Web
+<img src="https://user-images.githubusercontent.com/57610590/172314413-4cb9690a-7cd3-4cd6-ba45-9b3ca2f06225.png"/>
+
+## 7. Metaverse
+<img src="https://user-images.githubusercontent.com/57610590/172314340-0306095b-9556-4457-ac57-4ed20a5f9954.png"/> 
+   
