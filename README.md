@@ -12,21 +12,21 @@
   > 공공 도서관을 위한 추천 시스템이 적용된 메타 버스 전자 도서관
 </div>
 
-## 프로젝트 개요
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![PyTorch Verseion](https://img.shields.io/badge/Pytorch-1.7.1-orange)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
 
-* 목적
-    * 코로나로 인해 오프라인 도서관을 이용하기 힘들고, 책 추천 시스템이 있지만 통계 기반의 베스트셀러 위주의 책 추천이 이루어지고 있는 상황을 해결하여 시민들이 다시 도서관을 쉽게 접근할 수 있는 환경 구축
-
-* 주요 기능
-    * 개인 대출 이력에 기반한 도서 추천 시스템
-    * 전저도서관 구축
-    * 메타버스 구축 및 추천 결과 반영
-
-## Team
+## 👩‍👦‍👦 Team
 
 ### RecSys_12조 Hi_Rec
 
-#### 👨‍👩‍👦‍👦 Members  
+####  Members  
 
 권용훈|김정훈|정승환|최종현|한광석|
 :-:|:-:|:-:|:-:|:-:
@@ -41,19 +41,33 @@
 - [`최종현`](https://github.com/Jonghyunchoi94) &nbsp; 역할 • 역할
 - [`한광석`](https://github.com/c0natus) &nbsp; 역할 • 역할
 
-## 기술 스택
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![PyTorch Verseion](https://img.shields.io/badge/Pytorch-1.7.1-orange)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
-[![Unreal Verseion](https://img.shields.io/badge/Unreal%20Engine-5.0.2-blue)]()
+## :bridge_at_night: 배경
 
-## 서비스 아키텍쳐
----
+#### 기존 공공 도서관의 문제
+* 과거에 비해 도서관 이용자 수가 크게 감소, 코로나 상황으로 감소 폭 계속 증가
+* 최근 증가한 플랫폼에 비해 빈약한 도서 추천 서비스
+
+#### 기존 전자 도서관의 문제
+* 책을 읽고 사람들이 모이는 문화공간으로서의 가치 상실
+
+## ❓ 기획 의도
+* 양질의 공공 데이터를 활용하여 공공도서관에 전문화된 추천시스템 제공
+* 메타버스를 활용하여 공공도서관의 이용 장려 및 문화공간으로서의 도서관의 의의를 더함
+
+## ❗ 서비스 개요
+### 1. 웹(전자도서관)
+* 회원가입, 로그인
+* 도서 검색, 도서 상세 정보
+* 도서 대출, 반납
+* 도서 추천 서비스
+
+### 2. 메타버스(LibraVerse)
+* 로그인, 프로필 설정, 케릭터 설정
+* 도서관 열기, 방문
+* 역사관, 스터디 공간, 도서 추천 서비스
+* 채팅 커뮤니티 기능
+
+## 📃 서비스 아키텍쳐
 <p align="center">
 <img src="https://user-images.githubusercontent.com/57610590/172322413-6eb0922e-54ec-411e-87e8-492f552bbf60.png"/>
 </p>
