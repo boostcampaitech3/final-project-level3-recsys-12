@@ -1,0 +1,122 @@
+{% extends 'base/base_1.html' %}
+
+{% block main_content %}
+
+    <div class="site-content bg-punch-light overflow-hidden" id="content">
+        <div class="container">
+            <header class="entry-header space-top-2 space-bottom-1 mb-2">
+                <div class="d-md-flex justify-content-between align-items-center py-4">
+                    <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">검색어: {{ text }}</h1>
+                    <h1 class="woocommerce-breadcrumb font-size-2">관련 자료 : 총 {{ search | length }} 권</h1>
+                </div>
+            </header>
+
+            <div class="row pb-8">
+                <div id="primary" class="content-area">
+                    <main id="main" class="site-main ">
+                        <div class="page type-page status-publish hentry">
+                            <!-- .entry-header -->
+                            <div class="entry-content">
+                                <div class="woocommerce">
+                                    
+                                    <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents">
+                                        <thead>
+                                            <tr>
+                                                <th class="Book-img"></th>
+                                                <th  class="Book-ISBN">ISBN 및 책 제목</th>
+                                                <th class="Book-publisher">출판사</th>
+                                                <th class="Book-publishyear">출판일</th>
+                          
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for book in search[:10] %}
+
+                                            <tr class="woocommerce-cart-form__cart-item cart_item">
+                                                <td class="Book-img">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src={{ book.image_URL }} class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" width: 170px height=250px>
+                                                    </div>
+                                                </td>
+
+                                                <td  class="Book-ISBN" data-title="ISBN">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ml-3 m-w-200-lg-down">
+                                                            <p>{{ book.isbn }}</p>
+                                                            <a href="/books/{{book.id}}">{{ book.title }}</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td  class="Book-publisher" data-title="Loan-date" style="width: 17%">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ml-3 m-w-200-lg-down">
+                                                            {{ book.publisher }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="Book-publishyear" data-title="Return-date" style="width: 17%">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ml-3 m-w-200-lg-down">
+                                                            <p style="opacity: 0.4" >{{ book.publication_year }}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                          
+                                            </tr>
+
+                                            {% endfor %}
+
+                                            {% for loan_book in returned_info %}
+
+                                            <tr class="woocommerce-cart-form__cart-item cart_item">
+                                                <td class="Book-img">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src={{ book.image_URL }} class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" width=170px height=250px>
+                                                    </div>
+                                                </td>
+
+                                                <td  class="Book-ISBN" data-title="Product">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ml-3 m-w-200-lg-down">
+                                                            <p>{{ book.isbn }}</p>
+                                                            <a href="#">{{ book.title }}</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td  class="Book-publisher" data-title="Title" style="width: 17%">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ml-3 m-w-200-lg-down">
+                                                            {{ book.publisher }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="Book-publishyear" data-title="Price" style="width: 17%">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ml-3 m-w-200-lg-down">
+                                                            {{ book.publication_year }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- .entry-content -->
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock main_content %}

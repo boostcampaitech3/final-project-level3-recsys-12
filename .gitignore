@@ -28,7 +28,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -168,6 +167,9 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
 
+
+config*
+datas*
 # Visual Studio 2015 user specific files
 .vs/
 

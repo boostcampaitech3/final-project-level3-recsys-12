@@ -1,0 +1,49 @@
+{% extends 'base/base_1.html' %}
+
+{% block main_content %}
+    <div class="site-content bg-punch-light overflow-hidden" id="content" style="overflow: scroll; white-space: nowrap;">
+        <div class="container">
+            <header class="entry-header space-top-2 space-bottom-1 mb-2">
+                <div class="d-md-flex justify-content-between align-items-center py-4">
+                    <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">대출 이력: 총 {{ all_loan_length }} 권</h1>
+                    <h1 class="woocommerce-breadcrumb font-size-2">미반납 : 총 {{ loaned_info | length }} 권</h1>
+                </div>
+            </header>
+
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main ">
+                    <div class="page type-page status-publish hentry">
+                        <!-- .entry-header -->
+                        <div class="entry-content">
+                            <div class="woocommerce">
+                                <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" style="width: 100%; margin-bottom: 60px;">
+                                    <thead>
+                                        <tr>
+                                            <th class="Book-img"></th>
+                                            <th  class="text-center Book-ISBN">ISBN 및 책 제목</th>
+                                            <th class="text-center Book-loan-at">대출일</th>
+                                            <th class="text-center Book-return-at">반납일/예정일</th>
+                                            <th class="text-center Book-return">반납</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for loan_book in loaned_info %}
+                                        {% include 'user/loan_history_tbody.html' %}
+                                        {% endfor %}
+                                        {% for loan_book in returned_info %}
+                                        {% include 'user/loan_history_tbody.html' %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- .entry-content -->
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <!-- ====== END MAIN CONTENT ====== -->
+
+{% endblock main_content %}

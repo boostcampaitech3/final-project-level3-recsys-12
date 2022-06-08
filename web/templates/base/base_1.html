@@ -1,0 +1,17 @@
+{% extends 'base/head.html' %}
+
+{% block body %}
+<body>
+    {% include 'base/header.html' %}
+
+    <!-- ====== MAIN CONTENT ====== -->
+    {% block main_content %}
+    {% endblock main_content %}
+    
+    <!-- ====== END MAIN CONTENT ====== -->
+
+    {% include 'base/footer.html' %}
+
+    {% include 'base/js.html' %}
+</body>
+{% endblock body %}
