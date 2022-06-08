@@ -9,10 +9,11 @@ send_to_unreal = APIRouter(prefix="/rec")
 
 
 # 정렬, 필터링을 하는 것이므로 Query Parameter가 더 적합
-@send_to_unreal.get("/{user_id}")
+@send_to_unreal.get("/")
 async def get_rec_result(request: Request, user_id: str, db: Session = Depends(get_db)):
     # A0496269KM4VQ5JO5KRY@gmail.com
     # AZVXGCT3CHIS5@gmail.com
+
     inference_books = get_inference_of_user(db, user_id)
     inference_dict = dict()
 

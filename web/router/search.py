@@ -1,13 +1,13 @@
 from typing import List
-from fastapi import APIRouter, Form, Request, Depends, HTTPException
+from fastapi import APIRouter, Form, Request, Depends
 
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-from urllib3 import HTTPResponse
 from utils import templates, get_db
 
+from db import crud
 
-from db import crud, schemas
+import os
 
 search_router = APIRouter(prefix="/search")
 
