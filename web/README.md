@@ -1,4 +1,6 @@
-# LibraVerse(WEB)
+# LibraVerse(web)
+
+A web implementation of LibraVerse using fastapi framework
 
 ## Requirements
 
@@ -9,3 +11,27 @@
 2. `python __main__.py`
 
 ## Configurations
+
+```bash
+├── db
+│   ├── crud.py
+│   ├── database.py
+│   ├── load_data.py
+│   ├── models.py
+│   └── schemas.py
+├── router
+│   ├── books.py
+│   ├── login.py
+│   ├── logout.py
+│   ├── mypage.py
+│   ├── recsys.py
+│   ├── register.py
+│   ├── search.py
+│   └── user_loan_info.py
+├── static
+├── templates
+├── __main__.py
+├── main.py
+├── utils.py
+└── requirements.txt
+``` 
