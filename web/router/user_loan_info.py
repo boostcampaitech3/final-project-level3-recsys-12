@@ -32,6 +32,7 @@ def user_loan_info(request: Request, db: Session = Depends(get_db), current_user
             dict_info['img_URL'] = loan_book.book.image_URL
             dict_info['is_return'] = loan_book.is_return
             if dict_info['is_return'] is True:
+                dict_info['due'] = False
                 dict_info['return_at'] = str(loan_book.return_at)
                 list_returned_books.append(dict_info)
             else:

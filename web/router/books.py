@@ -163,7 +163,7 @@ async def read_item(request: Request, db: Session = Depends(get_db), book_id: st
         "loan_status": loan_status,
         "rating": rating
         }
-        return templates.TemplateResponse(os.path.join('book', 'detali.html'), context)
+        return templates.TemplateResponse(os.path.join('book', 'detail.html'), context)
     else:
         loan_status = True
         context = {
@@ -175,7 +175,7 @@ async def read_item(request: Request, db: Session = Depends(get_db), book_id: st
         "loan_status": loan_status,
         "rating": 0,
         }
-        return templates.TemplateResponse(os.path.join('book', 'detali.html'), context)
+        return templates.TemplateResponse(os.path.join('book', 'detail.html'), context)
 
 
 @book_router.post("/{book_id}/ratingcreate", response_class=RedirectResponse)
@@ -220,7 +220,7 @@ def loan_book_func(request: Request, book_id: str, db: Session = Depends(get_db)
     if current_user is False:
         context['login_required'] = True
         context['fail_message'] = '로그인이 필요합니다.'
-        return templates.TemplateResponse("html/account_fail.html", context)
+        return templates.TemplateResponse(os.path.join("user", "account_fail.html"), context)
     else:          
         crud.create_book_loan(db, current_user.id, book_id)
         response = RedirectResponse(url=f"http://118.67.131.88:30001/books/{book_id}")

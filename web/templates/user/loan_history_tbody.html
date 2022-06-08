@@ -1,0 +1,34 @@
+<tr class="woocommerce-cart-form__cart-item cart_item">
+    <td class="Book-img">
+        <div class="text-center">
+            <img src={{ loan_book.img_URL }} alt="" width: 170px height=250px>
+        </div>
+    </td>
+
+    <td  class="Book-ISBN" data-title="ISBN">
+        <p>{{ loan_book.isbn }}</p>
+        <a href="/books/{{loan_book.isbn}}">{{ loan_book.title }}</a>
+    </td>
+
+    <td  class="Book-loan-at" data-title="Loan-date" style="width: 17%">
+        <div class="text-center">
+            {{ loan_book.loan_at[:10] }}
+        </div>
+    </td>
+
+    <td class="Book-return-at" data-title="Return-date" style="width: 17%">
+        {% if loan_book.due == False %}
+        <div class="text-center">
+            {{ loan_book.return_at[:10] }}    
+        </div>
+        {% else %}
+        <div class="text-center" style="opacity: 0.4">
+            {{ loan_book.due[:10] }}
+        </div>
+        {% endif %}
+    </td>
+
+    <td class="Book-return" style="width: 15%">
+        <button class="btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium" onclick="location.href='/books/{{ loan_book.isbn }}/return'">반납</button>
+    </td>
+</tr>

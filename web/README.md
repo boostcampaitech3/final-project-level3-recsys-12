@@ -1,7 +1,11 @@
-실행 방법
+# LibraVerse(WEB)
 
-```python
-python __main__.py
-```
+## Requirements
 
-- main page url: ./
+- uvicorn, fastapi, pyyaml, sqlalchemy, psycopg2-binary, pydantic[email], passlib[bcrypt], python-jose[cryptography], Jinja2, python-multipart
+
+## Usage
+1. `pip install -r requirements.txt`
+2. `python __main__.py`
+
+## Configurations
