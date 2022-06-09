@@ -15,7 +15,7 @@ from sklearn.preprocessing import MinMaxScaler
 ##############################ARGS##################################
 args = {
     ######data#######
-    'min_user_cnt' : 5,
+    'min_user_cnt' : 0,
     'min_item_cnt' : 0,
     'n_heldout' : 1000,
     'target_prop' : 0.2,
