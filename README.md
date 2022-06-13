@@ -70,6 +70,7 @@
 </p>
 
 ## 🎨 Gallary
+[발표 영상](https://youtu.be/ISOsV9eVHfc)
 ### 전자도서관 MainPage
 ---
 <p align="center">
